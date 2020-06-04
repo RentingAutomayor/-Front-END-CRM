@@ -1,0 +1,74 @@
+<div class="card">
+    <div class="card-body">
+        <form [formGroup]="formPerson">
+            <fieldset>
+                <legend>Datos básicos</legend>
+                <div class="form-row mb-4">
+                    <div class="col-6">
+                        <label for="#">Tipo de documento:</label>
+                        <select class="browser-default custom-select" formControlName="cmboKindOfDocument" (change)="validateKindOfPerson($event.target)">
+                            <option disabled>Seleccione ... </option>
+                            <option *ngFor="let kindOfDoc of kindOfDocuments" [value]="kindOfDoc.id">
+                                {{ kindOfDoc.description | titlecase }}</option>
+                        </select>
+                    </div>
+                    <div class="col-6">
+                        <label for="">Documento:</label>
+                        <input type="number" class="form-control" placeholder="Documento ..." formControlName="txtDocument" #txtDocument (input)="searchPerson('id|'+txtDocument.value)">
+                        <div *ngIf="isLsClient && isTxtDocumentActive">
+                            <ul>                                         
+                                <li *ngFor="let client of lsClient$ | async"  (click)="setDataClientToForm(client)">{{client.id + ' - ' + client.name + ' ' + client.lastName}}</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-row mb-4">
+                    <div class="col-12">
+                        <label for="#">{{lblNameDescription}}:</label>
+                        <!--Para manejar formularios reactivos se debe registrar dentro de los input correspondientes-->
+                        <input type="text" placeholder="{{lblNameDescription}} ..." class="form-control" formControlName="txtName" #txtName (input)="searchPerson('name|'+txtName.value)">
+                        <div *ngIf="isLsClient && isTxtNameActive">
+                            <ul>                                         
+                                <li *ngFor="let client of lsClient$ | async" (click)="setDataClientToForm(client)">{{client.id + ' - ' + client.name + ' ' + client.lastName}}</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-row mb-4" *ngIf="isNaturalPerson==true">
+                    <div class="col-12" >
+                        <label for="#">Apellidos</label>
+                        <input type="text" placeholder="Apellidos..." class="form-control"  formControlName="txtLastName">
+                    </div>
+                </div>
+                <div class="form-row mb-4" *ngIf="isNaturalPerson==true">
+                    <div class="col-6">
+                        <label for="#">Celular</label>
+                        <input type="number" placeholder="Celular..." class="form-control" formControlName="txtCellPhone">
+                    </div>
+                    <div class="col-6">
+                        <label for="#">Correo electrónico</label>
+                        <input type="email" placeholder="Email..." class="form-control" formControlName="txtEmail">
+                    </div>
+                </div>               
+                <app-city [selectedCity]="oSelectedCity"></app-city> 
+                <div class="form-row mb-4" *ngIf="isClientForm">
+                    <div class="col-12">                        
+                        <app-economic-activity [EconomicActSelected]="oEconomicActSelected"></app-economic-activity>    
+                    </div>
+                </div> 
+                <div class="form-row mb-4" *ngIf="isClientForm">
+                    <div class="col-12">
+                        <app-canal [canalSelected]="oCanalSelected"></app-canal>
+                    </div>
+                </div>    
+                
+                <div class="form-row mb-4" *ngIf="frmHasErrors">
+                    <div class="col-12">
+                        <p class="text-danger"><b>{{ validationForm.message }}</b></p>
+                    </div>
+                </div> 
+                <button button type="button" class="btn btn-outline-primary waves-effect btn-save-client" (click)="setPerson()">Siguiente <i class="fas fa-angle-double-right"></i></button>                              
+            </fieldset>
+        </form>
+    </div>
+</div>

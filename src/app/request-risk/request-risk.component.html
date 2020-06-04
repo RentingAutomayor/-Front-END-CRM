@@ -1,0 +1,54 @@
+<app-navigation></app-navigation>
+<div class="w-75 container-request-risk">
+    <div class="card">
+        <div class="card-body">
+            <form [formGroup]="frmRiskInformation">
+                <legend>Información de riesgos</legend>
+                <div class="form-row mb-4">
+
+                    <div class="col-6">
+                        <label for="#">Número de la solicitud:</label>
+                        <input class="form form-control" type="text" disabled [value]="requestToUpdate.id">
+                    </div>
+                    <div class="col-6">
+                        <label for="#">Cliente:</label>
+                        <input class="form form-control" type="text" disabled
+                            [value]="requestToUpdate.client.name + ' ' + requestToUpdate.client.lastName">
+                    </div>
+                </div>
+
+                <div class="form-row mb-4">
+
+                    <div class="col-6">
+                        <label for="#">Fecha de radicación:</label>
+                        <input type="date" class="form-control" formControlName="txtFilingDate">
+                    </div>
+
+                    <div class="col-6">
+                        <label for="#">Estado de riesgo:</label>
+
+                        <select class="browser-default custom-select" formControlName="cmbRiskState" (change)="setStateRisk($event.target.value)">
+                            <option disabled [value]="0">Seleccione...</option>
+                            <option *ngFor="let state of lsRiskStates" [value]="state.id">
+                                {{ state.description | titlecase}}
+                            </option>
+                        </select>
+                    </div>
+                  
+                </div>
+                <div class="form-row mb-4" *ngIf="isApproved">
+                    <div class="col-12">
+                        <label for="#">Monto Aprobado</label>
+                        <input type="text" class="form-control" placeholder="Valor" (keyup)="formatAmmountApproved($event)" formControlName="txtAmmountApproved">
+                    </div>
+                </div>
+                <div class="container-btnActions">
+                    <input type="button" class="btn btn-danger btn-action" value="Cancelar"
+                        routerLink="/MasterRequests" />
+                    <input type="button" class="btn btn-success btn-action" value="Actualizar Solicitud"
+                        (click)="UpdateRequest()" />
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

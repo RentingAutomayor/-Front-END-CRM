@@ -1,0 +1,81 @@
+
+<form [formGroup]="frmRequest">
+    <div class="card card w-75 request-container">
+        <h3>Datos de la solicitud</h3>
+        <div class="card">
+            <div class="card-body">
+
+                <div class="card-body">
+
+                    <div class="form-row mb-4">
+                        <div class="col-12">
+                            <Label>Gerente del banco</Label>
+                            <select class="form-control" formControlName="cmbAccounManager" (change)="setAccountManager($event.target.value)">
+                                <option disabled>Seleccione ...</option>
+                                <option *ngFor="let accountManager of lsAccountManagerBank" [value]="accountManager.id">
+                                    {{ accountManager.name +' '+accountManager.lastName }}</option>
+                            </select>
+                        </div>
+                    </div>                   
+                    <div class="form-row mb-4">
+                        <div class="col-6">
+                            <Label>Fecha visita inicial</Label>
+                            <input type="date" class="form-control" formControlName="txtInitialDate"
+                                placeholder="Fecha visita inicial" />
+                        </div>
+                        <div class="col-6">
+                            <Label>Fecha última visita</Label>
+                            <input type="date" class="form-control" formControlName="txtLastDate"
+                                placeholder="Fecha última visita" />
+                        </div>
+                    </div>
+                    <div class="form-row mb-4">
+                        <div class="col-12">
+                            <Label>Probabilidad</Label>
+                            <select class="form-control" formControlName="cmbProbability"
+                                (change)="setProbability($event.target.value)">
+                                <option disabled>Seleccione ...</option>
+                                <option *ngFor="let probability of lsProbabilities" [value]="probability.id">
+                                    {{ probability.description }}</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-row mb-4">
+                        <div class="col-6">
+                            <Label>Estado principal</Label>
+                            <select class="form-control" formControlName="cmbParentState" (change)="changeSecondStates($event.target.value)">
+                                <option disabled>Seleccione ...</option>
+                                <option *ngFor="let state of lsParentState" [value]="state.id">{{ state.description }}
+                                </option>
+                            </select>
+                        </div>
+                        <div class="col-6">
+                            <Label>Estado secundario</Label>
+                            <select class="form-control" formControlName="cmbChildState" (change)="setChildState($event.target.value)">
+                                <option disabled>Seleccione ...</option>
+                                <option *ngFor="let secondState of lsSecondState" [value]="secondState.id">
+                                    {{ secondState.description }}</option>
+                            </select>
+                        </div>
+
+
+                    </div>
+                    <button button type="button" class="btn btn-outline-primary btn-md waves-effect btn-actions" *ngIf="isANewRequest" (click)="backToFrmContact()"><i
+                            class="fas fa-angle-double-left"></i> Atrás</button>
+                </div>
+
+            </div>
+            <input type="button" value="Guardar Solicitud" formControlName="btnSaveRequest"
+                class="btn btn-info btn-lg btn-saveRequest" (click)="saveRequest()"/>
+
+        </div>
+    </div>
+</form>
+
+
+<div *ngIf="isAwaiting" class="container-img-loading">
+    <div class="divBack">
+        <app-img-loading></app-img-loading>
+    </div>
+</div>
+

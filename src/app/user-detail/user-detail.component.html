@@ -1,0 +1,28 @@
+<div class="card">
+    <div class="card-body">
+        <h2>Detalle de los usuarios</h2>
+        <table class="table table-striped">
+            <thead>
+                <th>Tipo de documento</th>
+                <th>Documento</th>
+                <th>Nombres</th>
+                <th>Apellidos</th>
+                <th>Teléfono</th>
+                <th>Email</th>
+                <th>Acciones</th>
+            </thead>
+            <tbody>
+                <tr *ngFor="let user of lsUsers">
+                    <td>{{ user.kindOfDocument }}</td>
+                    <td>{{ user.id }}</td>
+                    <td>{{ user.name }}</td>
+                    <td>{{ user.lastName }}</td>
+                    <td>{{ user.cellPhone }}</td>
+                    <td>{{ user.email }}</td>
+                    <td><i class="fas fa-pen-nib icon-table grey-text"></i><i class="fas fa-trash-alt red-text icon-table"></i></td>
+                </tr>
+            </tbody>
+        </table>
+
+    </div>
+</div>

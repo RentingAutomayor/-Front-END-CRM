@@ -1,0 +1,65 @@
+<app-navigation></app-navigation>
+<div class="w-75 container-request-operation">
+    <div class="card">
+        <div class="card-body">
+            <form [formGroup]="frmOperationalInformation">
+            <legend>Información de operaciones</legend>
+                <div class="form-row mb-4">
+                    <div class="col-6">
+                        <label for="#">Número de la solicitud:</label>
+                        <input class="form form-control" type="text" disabled [value]="requestToUpdate.id">
+                    </div>
+                    <div class="col-6">
+                        <label for="#">Cliente:</label>
+                        <input class="form form-control" type="text" disabled
+                            [value]="requestToUpdate.client.name + ' ' + requestToUpdate.client.lastName">
+                    </div>
+                </div>
+                <div class="form-row mb-4">
+                    <div class="col-6">
+                        <Label>Estado principal</Label>
+                        <select class="form-control" formControlName="cmbParentState" (change)="changeSecondStates($event.target.value)">
+                            <option [value]="0">Seleccione ...</option>
+                            <option *ngFor="let state of lsParentState" [value]="state.id">{{ state.description }}
+                            </option>
+                        </select>
+                    </div>
+                    <div class="col-6">
+                        <Label>Estado secundario</Label>
+                        <select class="form-control" formControlName="cmbChildState" (change)="setChildState($event.target.value)">
+                            <option  [value]="0">Seleccione ...</option>
+                            <option *ngFor="let secondState of lsSecondState" [value]="secondState.id">
+                                {{ secondState.description }}</option>
+                        </select>
+                    </div>
+                </div>
+            <div class="form-row mb-4">
+                <div class="col-6">
+                    <label for="#">Cantidad de vehículos entregados:</label>
+                    <input type="text" formControlName="txtDeliveredVehicles" (keyup)="setQuantityDelivered($event)" class="form-control">
+                </div>
+                <div class="col-6">
+                    <label for="#">Monto en activos entregado:</label>
+                    <input type="text" formControlName="txtDeliveredAmmount" (keyup)="setAmmountDelivered($event)" class="form-control">
+                </div>
+            </div>
+            <div class="form-row mb-4">
+                <div class="col-6">
+                    <label for="#">Fecha legalización:</label>
+                    <input type="date" formControlName="txtLegalizationDate" class="form-control">
+                </div>
+                <div class="col-6">
+                    <label for="#">Fecha de entrega:</label>
+                    <input type="date" formControlName="txtDeliveredDate" class="form-control">
+                </div>
+            </div>
+            <div class="container-btnActions">
+                <input type="button" class="btn btn-danger btn-action" value="Cancelar"
+                    routerLink="/MasterRequests" />
+                <input type="button" class="btn btn-success btn-action" value="Actualizar Solicitud"
+                    (click)="UpdateRequest()" />
+            </div>
+        </form>
+        </div>
+    </div>
+</div>

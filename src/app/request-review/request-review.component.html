@@ -1,0 +1,102 @@
+<app-navigation></app-navigation>
+<div class="w-75 container-request">
+    <div class="card">
+        <div class="card-body">
+            <!-- <form [formGroup]="frmOperationalInformation"> -->
+            <legend>Información General</legend>
+            <div class="form-row mb-4">
+                <div class="col-12">
+                    <label for="#">Número de la solicitud:</label>
+                    <input class="form form-control" type="text" disabled [value]="request.id">
+                </div>
+            </div>
+            <div class="form-row mb-4">
+                <div class="col-6">
+                    <label for="#">Canal</label>
+                    <input class="form form-control" type="text" disabled [value]="request.client.canal.description">
+                </div>
+                <div class="col-6">
+                    <label for="#">Probabilidad</label>
+                    <input class="form form-control" type="text" disabled [value]="request.probability.description">
+                </div>
+            </div>  
+            <div class="form-row mb-4">
+                <div class="col-6">
+                    <label for="#">Estado primario:</label>
+                    <input class="form form-control" type="text" disabled [value]="request.parentState.description">
+                </div>
+                <div class="col-6">
+                    <label for="#">Estado secundario:</label>
+                    <input class="form form-control" type="text" disabled [value]="request.childState.description">
+                </div>
+            </div>  
+            <br>
+            <hr>
+            <br>
+            <legend>Información del cliente</legend>
+            <div class="form-row mb-4">
+                <div class="col-6">
+                    <label for="#">Tipo de documento:</label>
+                    <input class="form form-control" type="text" disabled [value]="request.client.kindOfDocument.description">
+                </div>
+                <div class="col-6">
+                    <label for="#">Cliente:</label>
+                    <input class="form form-control" type="text" disabled [value]="request.client.name + ' ' + validateLastName(request.client.lastName)">
+                </div>
+            </div>    
+            <div class="form-row mb-4">
+                <div class="col-6">
+                    <label for="#">Ciudad:</label>
+                    <input class="form form-control" type="text" disabled [value]="request.client.city.name">
+                </div>
+                <div class="col-6">
+                    <label for="#">Actividad económica:</label>
+                    <input class="form form-control" type="text" disabled [value]="request.client.economicActivity.description">
+                </div>
+            </div>    
+            <br>
+            <hr>
+            <br>
+            <legend>Información de riesgos</legend>
+            <div class="form-row mb-4">
+                <div class="col-6">
+                    <label for="#">Estado de riesgos:</label>
+                    <input class="form form-control" type="text" disabled [value]="RiskState">
+                </div>
+                <div class="col-6">
+                    <label for="#">Monto aprobado:</label>
+                    <input class="form form-control" type="text" disabled [value]="ApprovedAmmount">
+                </div>
+            </div>  
+            <br>
+            <hr>
+            <br>
+            <legend>Información de operaciones</legend>
+            <div class="form-row mb-4">
+                <div class="col-6">
+                    <label for="#">Fecha de legalización:</label>
+                    <input class="form form-control" type="text" disabled [value]="LegalizationDate">
+                </div>
+                <div class="col-6">
+                    <label for="#">Fecha de entrega:</label>
+                    <input class="form form-control" type="text" disabled [value]="DeliveredDate">
+                </div>
+            </div> 
+            <div class="form-row mb-4">
+                <div class="col-6">
+                    <label for="#">Cantidad de vehículos entregados:</label>
+                    <input class="form form-control" type="text" disabled [value]="sharedFunctions.formatNumber(request.operationalInformation.deliveredVehicles.toString())">
+                </div>
+                <div class="col-6">
+                    <label for="#">Monto en activos entregado:</label>
+                    <input class="form form-control" type="text" disabled [value]="sharedFunctions.formatNumber(request.operationalInformation.deliveredAmmount.toString())">
+                </div>
+            </div>   
+            <br>                               
+            <div class="container-btnActions">
+                <input type="button" class="btn btn-info btn-action" value="Volver" routerLink="/MasterRequests" />
+            </div>
+            <!-- </form> -->
+        </div>
+    </div>
+</div>

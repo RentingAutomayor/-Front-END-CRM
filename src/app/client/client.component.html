@@ -1,0 +1,15 @@
+
+<div class="card w-75 client-container">    
+    <div class="card-body" *ngIf="!dataClientIsFinished">   
+        <h3 *ngIf="frmClientIsActive">Datos del cliente</h3>    
+        <app-person [kindOfForm]="kindOfForm" [frmClientBack]="frmClientBack" (ClientSetted)="onClientSetted($event)" (frmPersonIsFinished)="showFrmContacts()" *ngIf="frmClientIsActive"></app-person>    
+        <app-contact [listOfContacts]="lsContacts" [clientWasCreated]="clientWasCreated" [clientWillBeUpdate]="bClientWillBeUpdate"  *ngIf="frmContactsIsActive" (frmContactIsFinished)="showFrmRequest()" (backToFrmClient)="onShowFrmClient()"></app-contact> 
+        <input type="button" *ngIf="frmContactsIsActive" class="btn btn-info btn-lg btn-save-client" [formControl]="btnSaveClient" value="Guardar cliente" (click)="saveClient()"/>      
+    </div>
+</div>
+<div *ngIf="isAwaiting" class="container-img-loading">
+    <div class="divBack">
+        <app-img-loading></app-img-loading>
+    </div>
+</div>
+

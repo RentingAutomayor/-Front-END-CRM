@@ -1,0 +1,42 @@
+.container-login{
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.cont-lg{
+    position: absolute;
+    top:40%;
+    background-color: rgba(255,255,250, 1);
+    box-shadow: 10px 10px 5px 3px rgba(0,0,0,0.36);
+}
+
+.input-txt{
+    margin-top: 10px;
+}
+
+.img-logo{
+    width: 200px;
+    height: 200px;
+}
+
+.msgError{
+    position: relative;
+    margin-top: 30px;
+}
+
+.container-img-loading{
+    border-style: none;
+    cursor: pointer;
+}
+.divBack{
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0,0,0, 0.3);
+    position: absolute;
+    z-index: 5000;
+    top:0;
+}
+

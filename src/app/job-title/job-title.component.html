@@ -1,0 +1,7 @@
+<label for="">Cargo:</label>
+<input type="text" class="form-control" #jobTitle [formControl]="txtJobTitle" (input)="getJobTitleByDescription(jobTitle.value)" (focusout)="validateJobTitle()" [value]="jobTitleSelected.description"/>
+<ul *ngIf="isVisible">
+    <!-- El signo $ indica que el array de objetos que requiere el ngFor es un observable -->
+    <li *ngFor="let jobTitle of lsJobTitle$ | async" (click)="setJobTitleInInput(jobTitle)">
+        {{ jobTitle.description | titlecase }}</li>
+</ul>

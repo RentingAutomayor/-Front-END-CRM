@@ -1,0 +1,18 @@
+<form [formGroup]="formCity">
+    <div class="form-row mb-4">
+        <div class="col-6">
+            <label for="#">Departamento:</label>
+            <select class="browser-default custom-select" formControlName="cmbDepartment"  (change)="getCitiesByDepto($event.target)">
+                <option disabled [value]="0">Seleccione...</option>
+                <option *ngFor="let department of departments" [value]="department.id">{{department.name | titlecase}}</option>
+            </select>
+        </div>
+        <div class="col-6">
+            <label for="#">Ciudad:</label>
+            <select class="browser-default custom-select" formControlName="cmbCity"  (change)="setSelectedCity($event.target)">
+                <option disabled [value]="0">Seleccione...</option>
+                <option *ngFor="let city of cities"  [value]="city.id">{{ city.name | titlecase}}</option>
+            </select>
+        </div>
+    </div>
+</form>

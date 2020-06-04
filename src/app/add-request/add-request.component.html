@@ -1,0 +1,12 @@
+<app-navigation></app-navigation>
+<h2 class="title-request">Registro de solicitudes</h2>
+<div class="client-container">
+    <app-client (formContactsWasFinish)="onShowFrmRequest($event)" [frmContactIsBack]="frmContactIsBack"></app-client>
+</div>
+
+<div class="request-container"  *ngIf="frmRequestIsVisible">
+    <app-request (eventBackTofrmContact)="onShowFrmContact()"></app-request>
+</div>
+
+
+ 

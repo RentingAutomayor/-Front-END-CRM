@@ -1,0 +1,5 @@
+<label for="#">Gerente renting</label>
+<select class="browser-default custom-select" (change)="setUserSelected($event.target.value)">
+    <option disabled>Seleccione...</option>
+    <option *ngFor="let user of lsUsers" [value]="user.id">{{user.name + " " + user.lastName | titlecase}}</option>
+</select>

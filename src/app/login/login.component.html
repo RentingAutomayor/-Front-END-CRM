@@ -1,0 +1,18 @@
+<div class="container-login">
+    <header>
+        <img src="../../assets/LogoRenting.jpg" alt="logo" class="img-logo" />
+        <img src="../../assets/banner-login.png" alt="banner" />
+    </header>
+    <div class="cont-lg text-center border border-light p-5 w-50">
+        <input type="text" placeholder="Usuario ... " [formControl]="txtUsername" class="form-control input-txt" />
+        <input type="password" placeholder="Contraseña ..." [formControl]="txtPassword" class="form-control input-txt" />
+        <br><span *ngIf="loginIsInvalid" class="red-text msgError"><b>* {{messageError}}</b></span>
+        <input type="button" value="Ingresar" class="btn btn-info btn-block my-4" type="submit" (click)="login()" />
+    </div>
+</div>
+<div *ngIf="isAwaiting" class="container-img-loading">
+    <div class="divBack">
+        <app-img-loading></app-img-loading>
+    </div>
+</div>
+

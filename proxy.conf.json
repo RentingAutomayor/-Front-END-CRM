@@ -1,0 +1,7 @@
+{
+    "/Formularios/api/*":{
+        "target":"http://localhost",
+        "secure": true,
+        "changeOrigin":true
+    }
+}

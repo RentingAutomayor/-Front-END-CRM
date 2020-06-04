@@ -1,0 +1,9 @@
+<form [formGroup]="frmEconomicActivity">
+    <label for="#">Actividad económica:</label>
+    <select class="browser-default custom-select" formControlName="cmbEconomicActivity" (change)="setEconomicActivity($event.target)">
+        <option disabled [value]="0">Seleccione...</option>
+        <option *ngFor="let economicActivity of lsEconomicActivity" [value]="economicActivity.id">
+            {{economicActivity.description | titlecase}}
+        </option>
+    </select>
+</form>

@@ -1,0 +1,21 @@
+<app-navigation></app-navigation>
+<h2>Actualizar solicitud</h2>
+
+<div class="tab-container">
+    <div class="tab">
+        <button (click)="showContainerClient()" class="btn btn-info btn-tab ">Datos del cliente</button>
+        <button (click)="showContainerRequest()" class="btn  btn-info btn-tab" >Datos de la solicitud</button>
+    </div>
+</div>
+
+
+<div class="client-container" *ngIf="containerClientIsVisible">
+    <app-client [oClientToUpdate]="pClientToUpdate"></app-client>
+</div>
+
+<div class="request-container" *ngIf="containerRequestIsVisible">
+    <app-request [oRequestToUpdate]="oRequestToEdit"></app-request>
+</div>
+
+
+

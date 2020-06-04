@@ -1,0 +1,18 @@
+ul{
+    position: absolute;
+    z-index: 3;
+}
+
+li{
+    list-style: none;
+    padding: 5px;
+    border-bottom: solid 1px gray;
+    cursor: pointer;
+    width: 300px;
+    background-color: white;
+}
+
+li:hover{
+   background-color: lightskyblue;
+   color: white;
+}

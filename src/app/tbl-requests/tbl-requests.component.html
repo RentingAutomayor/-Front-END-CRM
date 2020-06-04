@@ -1,0 +1,152 @@
+<app-navigation></app-navigation>
+<div class="request-container w-75">
+    
+    <h3>Solicitudes radicadas</h3>
+    <div class="container-filter">
+        <form [formGroup]="frmFilter">
+            <fieldset>
+                <h6>Búsqueda de solicitudes</h6>
+                <div class="form-row mb-4">
+                    <div class="col-4">
+                        <select class="browser-default custom-select" formControlName="cmbKindOfFilter" (change)="setKindOfFilter()">
+                            <option disabled>Seleccione ... </option>
+                            <option [value]="'id'">Código</option>
+                            <option [value]="'client'">Cliente</option>
+                            <option [value]="'probability'">Probabilidad</option>
+                            <option [value]="'user'">Gerente de cuenta renting</option>
+                            <option [value]="'parentState'">Estado primario</option>
+                            <option [value]="'childState'">Estado secundario</option>
+                            <option [value]="'registrationDate'">Fecha de registro</option>
+                        </select>
+                    </div>
+                    <div class="col-4">
+                        <input type="text" class="form-control" formControlName="txtValue"
+                            placeholder="valor a buscar ..." (input)="verifyContent()" *ngIf="filterIdIsVisible || filterClientIsVisible">
+
+                            <select class="browser-default custom-select" formControlName="cmbProbability" *ngIf="filterProbabilityIsVisible">
+                                <option>Seleccione... </option>
+                                <option *ngFor="let probability of oLsProbabilities" [value]="probability.id">{{probability.description |titlecase}}</option>
+                            </select>
+
+                            <select class="browser-default custom-select" formControlName="cmbUser" *ngIf="filterUserIsVisible">
+                                <option>Seleccione ... </option>
+                                <option *ngFor="let oUser of oLsUsers" [value]="oUser.id">{{ oUser.name+ " " + oUser.lastName | titlecase}}</option>
+                            </select>
+
+                            <select class="browser-default custom-select" formControlName="cmbParentState" *ngIf="filterParentStateIsVisbible">
+                                <option>Seleccione ... </option>
+                                <option *ngFor="let parentState of oLsParentStates" [value]="parentState.id">{{parentState.description | titlecase}}</option>
+                            </select>
+
+                            <select class="browser-default custom-select" formControlName="cmbChildState" *ngIf="filterChildStateIsVisible">
+                                <option>Seleccione ... </option>
+                                <option *ngFor="let childState of oLsChildState" [value]="childState.id">{{ childState.description | titlecase }}</option>
+                            </select>
+
+                            <input type="date" formControlName="txtRegistrationDate" class="form-control" *ngIf="filterRegistrationDateIsVisible">
+                    </div>
+                    <div class="col-4">
+                        <button class="btn btn-outline-primary btn-md waves-effect btn-filter"
+                            (click)="filterRequests()">Filtrar solicitudes</button>
+
+                            <button class="btn btn-outline-danger btn-md waves-effect btn-filter"
+                            (click)="deleteFilter()" *ngIf="isFiltred">Quitar filtros</button>
+
+                            <button class="btn btn-outline-info btn-md waves-effect btn-filter"
+                            (click)="generateFile()" *ngIf="exportFileIsAllowed">Exportar Archivo</button>
+                    </div>
+                </div>
+            </fieldset>
+        </form>
+    </div>
+
+    <div class="container-table">
+        <button class="btn-add btn-info" routerLink="/NewRequest" *ngIf="insertIsAllowed"><i
+                class="fas fa-plus"></i></button>
+        <table class="table table-striped">
+            <thead>
+                <th>Código</th>
+                <th>Cliente</th>
+                <th>Probabilidad</th>
+                <th>Estado primario</th>
+                <th>Estado secundario</th>
+                <th>Fecha de registro</th>
+                <th>Gerente de cuenta</th>
+                <th>Acciones</th>
+            </thead>
+            <tbody>
+                <tr *ngFor="let request of lsRequest">
+                    <td>{{ request.id }}</td>
+                    <td>{{ (request.client.name  +' '+ validateLastName(request.client.lastName)) | titlecase }}</td>
+                    <td>{{ request.probability.description }}</td>
+                    <td>{{ request.parentState.description  }}</td>
+                    <td>{{ request.childState.description  }}</td>
+                    <td>{{ request.registrationDate | date:'yyyy/MM/dd hh:mm:ss aa' }}</td>
+                    <td>{{ (request.user.name +' '+ request.user.lastName) | titlecase }}</td>
+                    <td>
+                        <i class="fas fa-info-circle text-info" title="Más información" *ngIf="readIsAllowed"
+                            (click)="viewRequestReview(request)"></i>
+                        <i class="fas fa-edit text-warning" title="Modificar"
+                            (click)="markRequestToEdit(request);updateModal.show()" *ngIf="updateIsAllowed"></i>
+                        <i class="fas fa-trash-alt text-danger" (click)="basicModal.show();markRequestToDelete(request)"
+                            title="Eliminar" *ngIf="deleteIsAllowed"></i>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<div mdbModal #basicModal='mdbModal' class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myBasicModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close pull-right" aria-label="Close" (click)="basicModal.hide()">x</button>
+                <h4 class="modal-title" id="MyModalLabel">Eliminar solicitud.</h4>
+            </div>
+            <div class="modal-body">
+                <p>¿Está seguro que desea eliminar esta solicitud para el cliente?</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" mdbBtn color="danger" class="waves-light" aria-label="Close"
+                    (click)="basicModal.hide()" mdbWavesEffect>Cancelar</button>
+                <button type="button" mdbBtn color="success" class="relative waves-light" mdbWavesEffect
+                    (click)="basicModal.hide();deleteRequest()">Eliminar solicitud</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div mdbModal #updateModal='mdbModal' class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myBasicModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close pull-right" aria-label="Close"
+                    (click)="updateModal.hide()">x</button>
+                <h4 class="modal-title" id="MyModalLabel">Actualizar información de solicitud.</h4>
+            </div>
+            <div class="modal-body">
+                <p>¿Qué información desea actualizar?</p>
+                <button class="btn btn-info w-75 btn-edit-request" routerLink="/UpdateRequest"
+                    (click)="setRequestToEdit()">Información general</button>
+                <button class="btn btn-info w-75 btn-edit-request" routerLink="/UpdateRiskInformation"
+                    *ngIf="updateRiskIsAllowed" (click)="setRequestToEdit()">Información de riesgos</button>
+                <button class="btn btn-info w-75 btn-edit-request" routerLink="/UpdateOperationalInformation"
+                    *ngIf="updateOperationsIsAllowed" (click)="setRequestToEdit()">Información de operaciones</button>
+            </div>
+            <div class="modal-footer">
+                <button type="button" mdbBtn color="danger" class="waves-light" aria-label="Close"
+                    (click)="updateModal.hide()" mdbWavesEffect>Cancelar</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div *ngIf="isAwaiting" class="container-img-loading">
+    <div class="divBack">
+        <app-img-loading></app-img-loading>
+    </div>
+</div>
+

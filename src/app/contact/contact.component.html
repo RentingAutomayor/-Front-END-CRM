@@ -1,0 +1,78 @@
+<div class="card">
+    <div class="card-body">
+        <h3>Contactos</h3>
+        <button class="btn-add btn-info" (click)="basicModal.show()"><i class="fas fa-plus"></i></button>
+        <app-tbl-contacts [lsContacts]="listOfContacts"></app-tbl-contacts>
+
+        
+        <button button type="button" class="btn btn-outline-primary btn-md waves-effect btn-actions" (click)="showFrmRequest()"[disabled]="!clientWasCreated" *ngIf="!clientWillBeUpdate">Siguiente <i
+                class="fas fa-angle-double-right"></i></button>
+        <button button type="button" class="btn btn-outline-primary btn-md waves-effect btn-actions" (click)="showFrmClient()"><i
+                class="fas fa-angle-double-left"></i> Atrás</button>
+
+
+        <div mdbModal #basicModal='mdbModal' id="modalContact" class="modal fade" tabindex="-1" role="dialog"
+            aria-labelledby="myBasicModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-lg" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close pull-right" aria-label="Close"
+                            (click)="basicModal.hide()">x</button>
+                        <h4 class="modal-title" id="MyModalLabel">Contactos</h4>
+                    </div>
+                    <div class="modal-body">
+                        <div class="card">
+                            <div class="card-body">
+                                <form [formGroup]="formContact">
+    
+                                    <div class="form-row mb-4">
+                                        <div class="col-6">
+                                            <label for="#">Nombre:</label>
+                                            <!--Para manejar formularios reactivos se debe registrar dentro de los input correspondientes-->
+                                            <input type="text" placeholder="Nombre ..." class="form-control" formControlName="txtName" />
+                                        </div>       
+                                        <div class="col-6">
+                                            <label for="#">Apellidos</label>
+                                            <input type="text" placeholder="Apellidos..." class="form-control"
+                                                formControlName="txtLastName" />
+                                        </div>
+                                    </div>
+                                    <div class="form-row mb-4">
+                                        <div class="col-6">
+                                            <label for="#">Celular</label>
+                                            <input type="number" placeholder="Celular..." class="form-control"
+                                                formControlName="txtCellPhone" />
+                                        </div>       
+                                        <div class="col-6">
+                                            <label for="#">Correo electrónico</label>
+                                            <input type="email" placeholder="Email..." class="form-control" formControlName="txtEmail" />
+                                        </div>
+                                    </div>
+                                    <div class="form-row mb-4">
+                                        <div class="col-12">
+                                            <label for="#">Dirección:</label>
+                                            <input type="text" placeholder="Dirección..." class="form-control"
+                                                formControlName="txtAdress" />
+                                        </div>
+                                    </div>
+                                    <div class="form-row mb-4">
+                                        <div class="col-12">
+                                            <app-job-title [jobTitleSelected]="jobTitleSelected"></app-job-title>
+                                        </div>
+                                    </div>  
+                            </form>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" mdbBtn color="danger" class="waves-light" aria-label="Close"
+                            (click)="basicModal.hide()" mdbWavesEffect>Cancelar</button>
+                        <button type="button" mdbBtn color="success" class="relative waves-light" mdbWavesEffect (click)="addNewContact()">Guardar
+                            contacto</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>

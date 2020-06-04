@@ -1,0 +1,62 @@
+i{
+    margin: 0 3px;
+    cursor: pointer;
+}
+
+.btn-add{
+    border-radius: 50%;
+     width: 50px;
+     height: 50px;     
+    cursor: pointer;
+    position: relative;
+    left: 95%;
+    margin-bottom: 10px;
+    top: 30px;
+    outline: none;
+    text-align: center;
+    font-size: 24px;
+    border: none;
+    z-index: 55;
+}
+
+.request-container{
+    position: relative;
+    margin-left: 22%;
+    top:20px;    
+}
+
+.btn-edit-request{
+    position: relative;
+    left:10%;
+}
+
+.container-filter{
+    position: relative;
+    margin-top: 30px;
+    z-index: 20;
+}
+
+.container-table{
+    position: relative;    
+    margin-top: -10px;
+}
+
+.btn-filter{
+    margin-top: -2px;
+    width: 170px;
+}
+
+.container-img-loading{
+    border-style: none;
+    cursor: pointer;
+}
+.divBack{
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0,0,0, 0.3);
+    position: absolute;
+    z-index: 5000;
+    top:0;
+}
+
+

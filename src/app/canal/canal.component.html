@@ -1,0 +1,7 @@
+
+
+<label for="#">Canal:</label>
+<select class="browser-default custom-select" [formControl]="cmbCanal" (change)="setCanal($event.target.value)">
+    <option disabled [value]="0">Seleccione...</option>
+    <option *ngFor="let canal of lsCanals" [value]="canal.id">{{canal.description}}</option>
+</select>
