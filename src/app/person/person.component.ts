@@ -16,6 +16,7 @@ import { FormGroup, FormControl } from '@angular/forms';
 import { UserService } from '../Services/user.service';
 import { PersonService } from '../Services/person.service';
 import { Person } from '../person';
+import { PreclientServiceService } from '../Services/preclient-service.service';
 
 import { CityService } from '../Services/city.service';
 import { City } from '../city';
@@ -32,6 +33,8 @@ import { Contact } from '../contact';
 import { Canal } from '../canal';
 import { CanalService } from '../Services/canal.service';
 import { ResponseApi } from '../responseApi';
+import { PreClient } from '../PreClient';
+import { type } from 'os';
 
 
 @Component({
@@ -49,9 +52,13 @@ export class PersonComponent implements OnInit {
   formPersonWasFinished: boolean;
   @Input() kindOfForm: string;
   isLsClient: boolean;
-  isTxtDocumentActive: boolean;
-  isTxtNameActive: boolean;
+  private isLsPreClient:boolean;
+  private isTxtDocumentActive: boolean;
+  private isTxtNameActive: boolean;
+  private isTxtCellphoneActive:boolean;
+  private isTxtEmailActive:boolean;
   lsClient$: Observable<Client[]>;
+  lsPreClient$: Observable<PreClient[]>;
   oSelectedCity: City;
   oSelectedEconomicActivity: EconomicActivity;
   oSelectedCanal: Canal;
@@ -64,9 +71,11 @@ export class PersonComponent implements OnInit {
   oEconomicActSelected: EconomicActivity;
   oCanalSelected: Canal;
   @Input() frmClientBack: boolean;
-  validationForm:ResponseApi;
-  frmHasErrors:boolean;
+  validationForm: ResponseApi;
+  frmHasErrors: boolean;
   oClientDB: Client;
+  //Modification of type of canal for the pre client
+  canalGroup_id: number;
 
   constructor(
     private kindOfDocsService: KindOfDocumentService,
@@ -75,7 +84,8 @@ export class PersonComponent implements OnInit {
     private cityService: CityService,
     private clientService: ClientService,
     private economicActivityService: EconomicActivityService,
-    private canalService: CanalService
+    private canalService: CanalService,
+    private preClientService: PreclientServiceService
   ) {
     this.formPerson = new FormGroup({
       cmboKindOfDocument: new FormControl('Seleccione ...'),
@@ -87,6 +97,8 @@ export class PersonComponent implements OnInit {
 
     });
 
+
+
   }
 
   ngOnInit() {
@@ -95,16 +107,25 @@ export class PersonComponent implements OnInit {
     this.lblNameDescription = "Nombres";
     this.objPerson = new Person();
     this.isLsClient = false;
+    this.isLsPreClient = false;
     this.isTxtDocumentActive = false;
     this.isTxtNameActive = false;
     this.isClientForm = false;
     this.clientExists = false;
     this.frmHasErrors = false;
+    //Campos de búsqueda para precliente
+    this.isTxtCellphoneActive = false;
+    this.isTxtEmailActive = false;
+
+    //Canal de los clientes
+    this.canalGroup_id = 0;
+
 
 
     if (this.kindOfForm == "client") {
       this.isLsClient = true;
       this.isClientForm = true;
+      this.canalGroup_id = 2; //2 es el grupo para prospecto de clientes;
       console.log("Busqueda sobre clientes activadas ... ");
       this.lsClient$ = this.description.pipe(
         //Espera 300 ms despues de cada tecleo
@@ -115,11 +136,7 @@ export class PersonComponent implements OnInit {
         //switchMap((desc:string) => this.clie.getJobTitlesByDescription(desc)),
         switchMap((desc: string) => this.clientService.getClientsByDescriptions(desc)),
       );
-
-
       if (this.frmClientBack) {
-
-
         let clientTmp = new Client();
         clientTmp = this.clientService.getClientTmp();
         console.log("Cliente temporal");
@@ -129,6 +146,20 @@ export class PersonComponent implements OnInit {
         this.oCanalSelected = clientTmp.canal;
         this.setDataClientToForm(clientTmp);
       }
+    } else if (this.kindOfForm == "PreClient") {
+      this.isLsPreClient = true;
+      let PersonTmp = this.personService.getPerson();
+      this.lsPreClient$ = this.description.pipe(
+        //Espera 300 ms despues de cada tecleo
+        debounceTime(300),
+        //Ignora un termino si es igual al anterior
+        distinctUntilChanged(),
+        //cambia a una busqueda de tipo Observable       
+        switchMap((desc: string) => this.preClientService.GetPreClientsByDescriptions(desc)),
+      );
+      if(PersonTmp != null){
+        this.SetDataPersonToForm(PersonTmp);
+      }      
     }
   }
 
@@ -152,14 +183,50 @@ export class PersonComponent implements OnInit {
 
   searchPerson(desc: string) {
     let aDesc = desc.split('|');
-    if (aDesc[0] == 'id') {
-      this.isTxtDocumentActive = true;
-      this.isTxtNameActive = false;
-    } else if (aDesc[0] == 'name') {
-      this.isTxtDocumentActive = false;
-      this.isTxtNameActive = true;
-    }
+
+    switch(aDesc[0]){
+      case 'id':
+          this.isTxtDocumentActive = true;
+          this.isTxtNameActive = false;
+        break;
+        case 'name':
+          this.isTxtDocumentActive = false;
+          this.isTxtNameActive = true;
+          break;
+        case 'cellphone':
+          this.isTxtCellphoneActive = true;
+          this.isTxtEmailActive = false;
+          break;
+        case 'email':
+          this.isTxtEmailActive = true;
+          this.isTxtCellphoneActive = false;          
+          break;
+    }   
     this.description.next(desc);
+  }
+
+  SetDataPersonToForm(pPerson: Person) {    
+    this.isTxtCellphoneActive = false;
+    this.isTxtEmailActive = false;
+
+    this.formPerson.controls.cmboKindOfDocument.setValue(pPerson.kindOfDocument.id);
+    this.formPerson.controls.txtDocument.setValue(pPerson.id);
+    this.formPerson.controls.txtName.setValue(pPerson.name);
+    this.formPerson.controls.txtLastName.setValue(pPerson.lastName);
+    this.formPerson.controls.txtEmail.setValue(pPerson.email);
+    this.formPerson.controls.txtCellPhone.setValue(pPerson.cellPhone);
+
+    if (pPerson.kindOfDocument.description.toUpperCase() == 'NIT') {
+      this.isNaturalPerson = false;
+      this.formPerson.controls.txtLastName.setValue("");
+      this.formPerson.controls.txtEmail.setValue("");
+      this.formPerson.controls.txtCellPhone.setValue("");
+    } else {
+      this.isNaturalPerson = true;
+    }
+
+    this.oSelectedCity = pPerson.city;
+    this.cityService.setSelectedCity(pPerson.city);
   }
 
   setDataClientToForm(pClient: Client) {
@@ -211,6 +278,7 @@ export class PersonComponent implements OnInit {
     objCity = this.cityService.getSelectedCity();
     //console.warn(this.formPerson.value);
     let id = this.formPerson.controls.txtDocument.value;
+
     if (oKindOfDocument != undefined) {
       let kindOfDoc = oKindOfDocument;
       let name = this.formPerson.controls.txtName.value;
@@ -236,76 +304,98 @@ export class PersonComponent implements OnInit {
       this.objPerson.email = email;
       this.objPerson.city = objCity;
 
-
-      this.validationForm = this.personService.validateFormPerson(this.objPerson);
-
-      if (this.validationForm.response) {
-        this.personService.setPerson(this.objPerson);
-
-        console.log("[Se crea el objeto persona:]");
-        console.log(this.objPerson);
-
-        if (this.kindOfForm == "client") {
-          let oEconomicActivity = this.economicActivityService.getEconomicActivity();
-          let oCanal = this.canalService.getSelectedCanal();
-
-          let oClient = new Client();
-          oClient.setClient(this.objPerson, oEconomicActivity, oCanal);         
-          console.warn("[Lista de contactors]");
-          console.log(oClient.lsContacts);
-          this.clientService.setClientTmp(oClient);
-          console.warn("[Cliente send to contact]")
-          console.log(oClient);
-
-          if(this.oClientDB != undefined){
-            console.log("[Objeto BD]");
-            console.warn(this.oClientDB);
-            console.log("[Objeto Formulario]");
-            console.warn(oClient);   
-            let isModified = false;
-            if(this.oClientDB.name != oClient.name){
-              console.log("El nombre del cliente ha sido modificado");
-              isModified = true;
-            }else if(this.oClientDB.lastName != oClient.lastName){
-              console.log("El apellido del cliente ha sido modificado");
-              isModified = true;
-            }else if(this.oClientDB.cellPhone != oClient.cellPhone){
-              console.log("El celular del cliente ha sido modificado");
-              isModified = true;
-            }else if(this.oClientDB.email != oClient.email){
-              console.log("El email del cliente ha sido modificado");
-              isModified = true;
-            }else if(this.oClientDB.city.id != oClient.city.id){
-              console.log("La ciudad del cliente ha sido modificado");
-              isModified = true;
-            }else if(this.oClientDB.economicActivity.id != oClient.economicActivity.id){
-              console.log("La actividad económica del cliente ha sido modificado");
-              isModified = true;
-            }else if(this.oClientDB.canal.id != oClient.canal.id){
-              console.log("El canal del cliente ha sido modificado");
-              isModified = true;
-            }else if(this.oClientDB.lsContacts == null){     
-              console.log("verificar actualización de contactos");
-              isModified = true;
-            }else if(this.oClientDB.lsContacts != null){     
-              console.log("verificar actualización de contactos");
-              isModified = true;
-            }
-
-            this.clientService.setClientWasModified(isModified);
-          }
-        }
-        this.frmHasErrors = false;
-
-        this.frmPersonIsFinished.emit(true);
-      } else {
-        alert("El formulario ingresado no es válido.");
-        console.log( this.validationForm.message);
-        this.frmHasErrors = true;
+      switch (this.kindOfForm) {
+        case 'client':
+          this.validateFormClient();
+          break;
+        case 'PreClient':
+          console.log("[Precliente a crear:]");
+          console.log(this.objPerson);
+          this.personService.setPerson(this.objPerson);
+          this.frmPersonIsFinished.emit(true);
+          break;
+        default:
+          console.log("No existe implementación valida");
+          break;
       }
-    }else{
+    } else {
       alert("Debe seleccionar un tipo de documento");
     }
+  }
+
+  private validateFormClient() {
+    this.validationForm = this.personService.validateFormPerson(this.objPerson);
+
+    if (this.validationForm.response) {
+      this.personService.setPerson(this.objPerson);
+
+      console.log("[Se crea el objeto persona:]");
+      console.log(this.objPerson);
+
+      if (this.kindOfForm == "client") {
+        let oEconomicActivity = this.economicActivityService.getEconomicActivity();
+        let oCanal = this.canalService.getSelectedCanal();
+
+        let oClient = new Client();
+        oClient.setClient(this.objPerson, oEconomicActivity, oCanal);
+        console.warn("[Lista de contactors]");
+        console.log(oClient.lsContacts);
+        this.clientService.setClientTmp(oClient);
+        console.warn("[Cliente send to contact]")
+        console.log(oClient);
+
+        if (this.oClientDB != undefined) {
+          console.log("[Objeto BD]");
+          console.warn(this.oClientDB);
+          console.log("[Objeto Formulario]");
+          console.warn(oClient);
+          let isModified = false;
+          if (this.oClientDB.name != oClient.name) {
+            console.log("El nombre del cliente ha sido modificado");
+            isModified = true;
+          } else if (this.oClientDB.lastName != oClient.lastName) {
+            console.log("El apellido del cliente ha sido modificado");
+            isModified = true;
+          } else if (this.oClientDB.cellPhone != oClient.cellPhone) {
+            console.log("El celular del cliente ha sido modificado");
+            isModified = true;
+          } else if (this.oClientDB.email != oClient.email) {
+            console.log("El email del cliente ha sido modificado");
+            isModified = true;
+          } else if (this.oClientDB.city.id != oClient.city.id) {
+            console.log("La ciudad del cliente ha sido modificado");
+            isModified = true;
+          } else if (this.oClientDB.economicActivity.id != oClient.economicActivity.id) {
+            console.log("La actividad económica del cliente ha sido modificado");
+            isModified = true;
+          } else if (this.oClientDB.canal.id != oClient.canal.id) {
+            console.log("El canal del cliente ha sido modificado");
+            isModified = true;
+          } else if (this.oClientDB.lsContacts == null) {
+            console.log("verificar actualización de contactos");
+            isModified = true;
+          } else if (this.oClientDB.lsContacts != null) {
+            console.log("verificar actualización de contactos");
+            isModified = true;
+          }
+
+          this.clientService.setClientWasModified(isModified);
+        }
+      }
+      this.frmHasErrors = false;
+
+      this.frmPersonIsFinished.emit(true);
+    } else {
+      alert("El formulario ingresado no es válido.");
+      console.log(this.validationForm.message);
+      this.frmHasErrors = true;
+    }
+  }
+
+  SetPreClientBdTmp(pPreclient:PreClient){
+    this.preClientService.SetPreClientBD(pPreclient);
+    console.warn("PreCliente a Cambiar Form Person");
+    console.log(pPreclient);
   }
 
 

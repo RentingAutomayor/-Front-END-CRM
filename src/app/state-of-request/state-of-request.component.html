@@ -1,0 +1,7 @@
+
+
+<label for="#">Estado de solicitud:</label>
+<select class="browser-default custom-select" [formControl]="cmbState" (change)="setState($event.target.value)">
+    <option disabled [value]="0">Seleccione...</option>
+    <option *ngFor="let state of lsStates" [value]="state.id">{{state.description}}</option>
+</select>

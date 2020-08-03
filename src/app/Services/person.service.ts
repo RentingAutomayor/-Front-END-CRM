@@ -59,7 +59,7 @@ export class PersonService {
     } else {
       let vNum = isNaN(Number.parseInt(pPerson.id));
       if (vNum) {
-        msg += "* El campo de documento DEBE ser númerico.\n";
+        msg += "* El campo de documento debe ser númerico.\n";
       }
     }
 
@@ -94,5 +94,40 @@ export class PersonService {
     }
 
     return rta;
+  }
+
+  ValidateChanges(personBD:Person, personForm:Person){
+    let personHasChanges:boolean;
+    personHasChanges = false;
+    
+    if(personBD.id != personForm.id){
+      personHasChanges = true;
+    }
+
+    if(personBD.kindOfDocument.id != personForm.kindOfDocument.id){
+      personHasChanges = true;
+    }
+
+    if(personBD.name != personForm.name){
+      personHasChanges = true;
+    }
+
+    if(personBD.lastName != personForm.lastName){
+      personHasChanges = true;
+    }
+
+    if(personBD.email != personForm.email){
+      personHasChanges = true;
+    }
+
+    if(personBD.cellPhone != personForm.cellPhone){
+      personHasChanges = true;
+    }
+
+    if(personBD.city.id != personForm.city.id){
+      personHasChanges = true;
+    }
+
+    return personHasChanges;
   }
 }

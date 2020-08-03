@@ -75,7 +75,7 @@
                 <th>Acciones</th>
             </thead>
             <tbody>
-                <tr *ngFor="let request of lsRequest">
+                <tr *ngFor="let request of lsRequest | paginate: { itemsPerPage: 5, currentPage: p }">
                     <td>{{ request.id }}</td>
                     <td>{{ (request.client.name  +' '+ validateLastName(request.client.lastName)) | titlecase }}</td>
                     <td>{{ request.probability.description }}</td>
@@ -93,6 +93,12 @@
                     </td>
                 </tr>
             </tbody>
+           <div class="paginationContainer">
+            <pagination-controls (pageChange)="p = $event"></pagination-controls>
+           </div>
+            
+              
+            
         </table>
     </div>
 </div>

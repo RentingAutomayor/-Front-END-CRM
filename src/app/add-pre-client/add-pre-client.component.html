@@ -1,0 +1,20 @@
+<app-navigation></app-navigation>
+<div class="card w-75 pre-client-container">    
+    <div class="card-body" *ngIf="frmPersonIsActive">   
+        <br>
+        <h3>Datos del cliente [Persona natural]</h3>  
+        <hr>
+        <br>  
+        <app-person [kindOfForm]="kindOfForm" (frmPersonIsFinished)="ShowFrmRequest()"></app-person>          
+    </div>
+    <div class="card-body" *ngIf="frmRequestIsActive">   
+        <app-request-pre-client (frmPersonCombeBack)="ShowFrmPerson()"></app-request-pre-client>
+    </div>
+</div>
+
+
+<div *ngIf="isAwaiting" class="container-img-loading">
+    <div class="divBack">
+        <app-img-loading></app-img-loading>
+    </div>
+</div>

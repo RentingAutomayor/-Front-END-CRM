@@ -14,15 +14,14 @@ export class CanalService {
 
   lsCanal: Canal[];
   oCanalSelected: Canal;
+  oCanalSocialNetworksSelected:Canal;
   urlApi = '/Formularios/api/canal/get';
 
   constructor(private http: HttpClient) { }
 
-  getCanals(): Observable<Canal[]> {
-    return this.http.get<Canal[]>(this.urlApi)
-      .pipe(
-        catchError(this.handleError<Canal[]>('getCanals', []))
-      );
+  async getCanals(canalGroup_id:number): Promise<Canal[]> {
+    let urlGetCanalByGroup = this.urlApi+'?canalGroup_id='+canalGroup_id;
+    return this.http.get<Canal[]>(urlGetCanalByGroup).toPromise();      
   }
 
   setSelectedCanal(pCanal: Canal) {
@@ -31,6 +30,14 @@ export class CanalService {
 
   getSelectedCanal(): Canal {
     return this.oCanalSelected;
+  }
+
+  SetCanalSocialNetworksSelected (pCanal: Canal) {
+    this.oCanalSocialNetworksSelected = pCanal;
+  }
+
+  GetCanalSocialNetworksSelected():Canal{
+    return this.oCanalSocialNetworksSelected;
   }
 
 

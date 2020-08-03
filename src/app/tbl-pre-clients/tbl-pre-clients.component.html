@@ -1,0 +1,52 @@
+<app-navigation></app-navigation>
+<div class="preClients-container w-75">
+    <h1>Gestión persona natural</h1>
+    <div class="container-table">
+        <button class="btn-add btn-info" (click)="NewPreRequest()"><i
+            class="fas fa-plus"></i></button>
+        <table class="table table-striped">
+            <thead>
+                <th>#</th>
+                <th>Cliente</th>
+                <th>Celular</th>
+                <th>Correo</th>
+                <th>Vehiculo</th>
+                <th>Estado</th>                
+                <th>Canal secundario</th>
+                <th>Fecha de registro</th>
+                <th>Acciones</th>
+            </thead>
+            <tbody>
+                <tr *ngFor="let preRequest of lsPreRequest | paginate: { itemsPerPage: 5, currentPage: p }">
+                    <td>{{ preRequest.id }}</td>
+                    <td>{{ preRequest.preClient.name + ' '+ preRequest.preClient.lastName  | titlecase}}</td>
+                    <td>{{ preRequest.preClient.cellPhone }}</td>
+                    <td>{{ preRequest.preClient.email }}</td>
+                    <td>{{ preRequest.vehicleModel.name }}</td>
+                    <td>{{ preRequest.stateRequest.description }}</td>                    
+                    <td>{{ GetCanalDescription(preRequest.secondCanal.id) }}</td>
+                    <td>{{ preRequest.registrationDate | date:'yyyy/MM/dd hh:mm:ss' }}</td>
+                    <td>
+                        <i class="fas fa-info-circle text-info btn-actions" title="Más información" 
+                        (click)="viewRequestReview(request)"></i>
+                    <i class="fas fa-edit text-warning btn-actions" title="Modificar"
+                        (click)="markPreRequestToEdit(preRequest)"></i>
+                    <i class="fas fa-trash-alt text-danger btn-actions" (click)="DeletePreRequest(preRequest.id)"
+                        title="Eliminar"></i>
+
+                    </td>
+                </tr>
+            </tbody>
+            <div class="paginationContainer">
+                <pagination-controls (pageChange)="p = $event"></pagination-controls>
+            </div>               
+        </table>
+    </div>
+</div>
+
+
+<div *ngIf="isAwaiting" class="container-img-loading">
+    <div class="divBack">
+        <app-img-loading></app-img-loading>
+    </div>
+</div>

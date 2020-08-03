@@ -9,6 +9,7 @@ import { FormGroup, FormControl } from '@angular/forms';
 import { Probability } from '../probability';
 import { State } from '../state';
 import { ResponseApi } from '../responseApi';
+import {NgxPaginationModule} from 'ngx-pagination';
 
 @Component({
   selector: 'app-tbl-requests',
@@ -49,6 +50,9 @@ export class TblRequestsComponent implements OnInit {
   oLsUsers: User[];
   oLsParentStates: State[];
   oLsChildState: State[];
+
+  //pagination
+  p:number = 1;
 
   constructor(
     private requestService: RequestService,
@@ -228,6 +232,7 @@ export class TblRequestsComponent implements OnInit {
   }
 
   filterRequests() {
+    this.p = 1;
     this.isFiltred = true;
     // alert("Buscando filtros " + this.frmFilter.controls.cmbKindOfFilter.value + ' ' + this.frmFilter.controls.txtValue.value ) ;
     let kindOfFilter = this.frmFilter.controls.cmbKindOfFilter.value;

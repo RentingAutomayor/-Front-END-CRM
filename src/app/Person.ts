@@ -6,10 +6,10 @@ export class Person{
     kindOfDocument:kindOfDocument;
     name:string;
     lastName:string;
+    phone:string;
     cellPhone:string;
     email:string;
     city:City;
-
     constructor(){}
 
 }

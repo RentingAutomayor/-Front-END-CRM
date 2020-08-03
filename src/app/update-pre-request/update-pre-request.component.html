@@ -1,0 +1,36 @@
+<app-navigation></app-navigation>
+<div class="card w-75 pre-client-container">
+    <br>
+    <h3>Actualización de datos</h3>
+    <hr>
+    <br>
+    <div class="card">
+        <div class="card-body">
+            <div class="form-row mb-2">
+                <div class="col-6">
+                    <label for="#">Solicitud N°</label>
+                    <input type="text" placeholder="Solicitud ..." class="form-control" [value]="sRequestId" disabled />
+                </div>
+                <div class="col-6">
+                    <label for="#">Fecha de registro</label>
+                    <input type="text" placeholder="Fecha de registro..." [value]="sRegistrationDate"
+                        class="form-control" disabled />
+                </div>
+
+            </div>
+        </div>
+    </div>
+    <div class="card-body" *ngIf="frmPersonIsActive">
+        <app-person [kindOfForm]="kindOfForm" (frmPersonIsFinished)="ShowFrmRequest()"></app-person>
+    </div>
+    <div class="card-body" *ngIf="frmRequestIsActive">
+        <app-request-pre-client (frmPersonCombeBack)="ShowFrmPerson()"  [isFrmToUpdate]="true"></app-request-pre-client>
+    </div>
+</div>
+
+
+<div *ngIf="isAwaiting" class="container-img-loading">
+    <div class="divBack">
+        <app-img-loading></app-img-loading>
+    </div>
+</div>

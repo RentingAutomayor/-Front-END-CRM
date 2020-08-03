@@ -3,10 +3,12 @@
         <form [formGroup]="formPerson">
             <fieldset>
                 <legend>Datos básicos</legend>
+                <hr>
                 <div class="form-row mb-4">
                     <div class="col-6">
                         <label for="#">Tipo de documento:</label>
-                        <select class="browser-default custom-select" formControlName="cmboKindOfDocument" (change)="validateKindOfPerson($event.target)">
+                        <select class="browser-default custom-select" formControlName="cmboKindOfDocument"
+                            (change)="validateKindOfPerson($event.target)">
                             <option disabled>Seleccione ... </option>
                             <option *ngFor="let kindOfDoc of kindOfDocuments" [value]="kindOfDoc.id">
                                 {{ kindOfDoc.description | titlecase }}</option>
@@ -14,10 +16,12 @@
                     </div>
                     <div class="col-6">
                         <label for="">Documento:</label>
-                        <input type="number" class="form-control" placeholder="Documento ..." formControlName="txtDocument" #txtDocument (input)="searchPerson('id|'+txtDocument.value)">
+                        <input type="number" class="form-control" placeholder="Documento ..."
+                            formControlName="txtDocument" #txtDocument (input)="searchPerson('id|'+txtDocument.value)">
                         <div *ngIf="isLsClient && isTxtDocumentActive">
-                            <ul>                                         
-                                <li *ngFor="let client of lsClient$ | async"  (click)="setDataClientToForm(client)">{{client.id + ' - ' + client.name + ' ' + client.lastName}}</li>
+                            <ul>
+                                <li *ngFor="let client of lsClient$ | async" (click)="setDataClientToForm(client)">
+                                    {{client.id + ' - ' + client.name + ' ' + client.lastName}}</li>
                             </ul>
                         </div>
                     </div>
@@ -26,48 +30,70 @@
                     <div class="col-12">
                         <label for="#">{{lblNameDescription}}:</label>
                         <!--Para manejar formularios reactivos se debe registrar dentro de los input correspondientes-->
-                        <input type="text" placeholder="{{lblNameDescription}} ..." class="form-control" formControlName="txtName" #txtName (input)="searchPerson('name|'+txtName.value)">
+                        <input type="text" placeholder="{{lblNameDescription}} ..." class="form-control"
+                            formControlName="txtName" #txtName (input)="searchPerson('name|'+txtName.value)">
                         <div *ngIf="isLsClient && isTxtNameActive">
-                            <ul>                                         
-                                <li *ngFor="let client of lsClient$ | async" (click)="setDataClientToForm(client)">{{client.id + ' - ' + client.name + ' ' + client.lastName}}</li>
+                            <ul>
+                                <li *ngFor="let client of lsClient$ | async" (click)="setDataClientToForm(client)">
+                                    {{client.id + ' - ' + client.name + ' ' + client.lastName}}</li>
                             </ul>
                         </div>
                     </div>
                 </div>
                 <div class="form-row mb-4" *ngIf="isNaturalPerson==true">
-                    <div class="col-12" >
+                    <div class="col-12">
                         <label for="#">Apellidos</label>
-                        <input type="text" placeholder="Apellidos..." class="form-control"  formControlName="txtLastName">
+                        <input type="text" placeholder="Apellidos..." class="form-control"
+                            formControlName="txtLastName">
                     </div>
                 </div>
                 <div class="form-row mb-4" *ngIf="isNaturalPerson==true">
                     <div class="col-6">
                         <label for="#">Celular</label>
-                        <input type="number" placeholder="Celular..." class="form-control" formControlName="txtCellPhone">
+                        <input type="number" placeholder="Celular..." class="form-control"
+                            formControlName="txtCellPhone" #txtCellphone
+                            (input)="searchPerson('cellphone|'+txtCellphone.value)">
+
+                        <div *ngIf="isLsPreClient && isTxtCellphoneActive">
+                            <ul>
+                                <li *ngFor="let preClient of lsPreClient$ | async"
+                                    (click)="SetDataPersonToForm(preClient);SetPreClientBdTmp(preClient)">
+                                    {{preClient.cellPhone+ ' - ' + preClient.email + ' - ' +preClient.name + ' ' + preClient.lastName}}</li>
+                            </ul>
+                        </div>
                     </div>
                     <div class="col-6">
                         <label for="#">Correo electrónico</label>
-                        <input type="email" placeholder="Email..." class="form-control" formControlName="txtEmail">
+                        <input type="email" placeholder="Email..." class="form-control" formControlName="txtEmail"
+                            #txtEmail (input)="searchPerson('email|'+txtEmail.value)">
+                        <div *ngIf="isLsPreClient && isTxtEmailActive">
+                            <ul>
+                                <li *ngFor="let preClient of lsPreClient$ | async"
+                                    (click)="SetDataPersonToForm(preClient);SetPreClientBdTmp(preClient)">
+                                    {{preClient.cellPhone + ' - ' + preClient.email + ' - ' +preClient.name + ' ' + preClient.lastName}}</li>
+                            </ul>
+                        </div>
                     </div>
-                </div>               
-                <app-city [selectedCity]="oSelectedCity"></app-city> 
-                <div class="form-row mb-4" *ngIf="isClientForm">
-                    <div class="col-12">                        
-                        <app-economic-activity [EconomicActSelected]="oEconomicActSelected"></app-economic-activity>    
-                    </div>
-                </div> 
+                </div>
+                <app-city [selectedCity]="oSelectedCity"></app-city>
                 <div class="form-row mb-4" *ngIf="isClientForm">
                     <div class="col-12">
-                        <app-canal [canalSelected]="oCanalSelected"></app-canal>
+                        <app-economic-activity [EconomicActSelected]="oEconomicActSelected"></app-economic-activity>
                     </div>
-                </div>    
-                
+                </div>
+                <div class="form-row mb-4" *ngIf="isClientForm">
+                    <div class="col-12">
+                        <app-canal [canalSelected]="oCanalSelected" [CanalGroup]="canalGroup_id"></app-canal>
+                    </div>
+                </div>
+
                 <div class="form-row mb-4" *ngIf="frmHasErrors">
                     <div class="col-12">
                         <p class="text-danger"><b>{{ validationForm.message }}</b></p>
                     </div>
-                </div> 
-                <button button type="button" class="btn btn-outline-primary waves-effect btn-save-client" (click)="setPerson()">Siguiente <i class="fas fa-angle-double-right"></i></button>                              
+                </div>
+                <button button type="button" class="btn btn-outline-primary waves-effect btn-save-client"
+                    (click)="setPerson()">Siguiente <i class="fas fa-angle-double-right"></i></button>
             </fieldset>
         </form>
     </div>

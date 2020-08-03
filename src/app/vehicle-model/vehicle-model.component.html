@@ -1,0 +1,6 @@
+
+<label for="#">Linea de vehiculo solicitado:</label>
+<select class="browser-default custom-select" [formControl]="cmbVehicleModel" (change)="setVehicleModel($event.target.value)">
+    <option disabled [value]="0">Seleccione...</option>
+    <option *ngFor="let model of lsVehicleModel" [value]="model.id">{{model.name}}</option>
+</select>

@@ -18,6 +18,7 @@ export class RequestService {
   private urlApi = '/Formularios/api/Request';
   requestToUpdate: RequestRenting;
   requestToView: RequestRenting;
+  private stateSelected:State;
 
   HttpOptions = {
     headers: new HttpHeaders({ 'Content-Type': 'application/json' })
@@ -105,6 +106,16 @@ export class RequestService {
     console.log(urlOperationalInformation);
     return this.http.post<ResponseApi>(urlOperationalInformation, pRequest, this.HttpOptions).toPromise();
   }
+
+  SetStateSelected(pStateSlected:State){
+    this.stateSelected = pStateSlected;
+  }
+
+  GetStateSelected():State{
+    return this.stateSelected;
+  }
+
+
 
   private handleError<T>(operation = 'operation', result?: T) {
     return (error: any): Observable<T> => {

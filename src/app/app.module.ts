@@ -35,6 +35,16 @@ import { LoginComponent } from './login/login.component';
 import { RequestReviewComponent } from './request-review/request-review.component';
 import { UpdateRequestComponent } from './update-request/update-request.component';
 import { ImgLoadingComponent } from './img-loading/img-loading.component';
+//Libreria para paginacion
+import {NgxPaginationModule} from 'ngx-pagination';
+import { TblPreClientsComponent } from './tbl-pre-clients/tbl-pre-clients.component';
+import { AddPreClientComponent } from './add-pre-client/add-pre-client.component';
+import { RequestPreClientComponent } from './request-pre-client/request-pre-client.component';
+import { StateOfRequestComponent } from './state-of-request/state-of-request.component';
+import { VehicleModelComponent } from './vehicle-model/vehicle-model.component';
+import { UpdatePreRequestComponent } from './update-pre-request/update-pre-request.component'; // <-- import the module
+
+import {DatePipe} from '@angular/common';
 
 
 
@@ -61,7 +71,13 @@ import { ImgLoadingComponent } from './img-loading/img-loading.component';
     LoginComponent,
     RequestReviewComponent,
     UpdateRequestComponent,
-    ImgLoadingComponent
+    ImgLoadingComponent,
+    TblPreClientsComponent,
+    AddPreClientComponent,
+    RequestPreClientComponent,
+    StateOfRequestComponent,
+    VehicleModelComponent,
+    UpdatePreRequestComponent
   ],
   imports: [
     BrowserModule,
@@ -69,9 +85,12 @@ import { ImgLoadingComponent } from './img-loading/img-loading.component';
     HttpClientModule,
     ReactiveFormsModule,
     BrowserAnimationsModule,
-    AppRoutingModule
+    AppRoutingModule,
+    NgxPaginationModule
   ],
-  providers: [],
+  providers: [
+    DatePipe
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
