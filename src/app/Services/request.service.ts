@@ -1,14 +1,14 @@
 import { Injectable } from '@angular/core';
 
-import { Probability } from '../probability';
-import { State } from '../state';
+import { Probability } from '../Models/probability';
+import { State } from '../Models/state';
 /*Para métodos asincronos se debe implementar el uso de observables*/
 import { Observable, of } from 'rxjs';
 /*Se deben importar las librerias para el amnejo de HTTP*/
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { catchError, map, tap } from 'rxjs/operators';
-import { RequestRenting } from '../RequestRenting';
-import { ResponseApi } from '../responseApi';
+import { RequestRenting } from '../Models/RequestRenting';
+import { ResponseApi } from '../Models/responseApi';
 import { RequestRiskComponent } from '../request-risk/request-risk.component';
 
 @Injectable({

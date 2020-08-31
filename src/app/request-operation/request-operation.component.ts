@@ -1,12 +1,12 @@
 import { Component, OnInit } from '@angular/core';
-import { RequestRenting } from '../RequestRenting';
+import { RequestRenting } from '../Models/RequestRenting';
 import { RequestService } from '../Services/request.service';
 import { FormGroup, FormControl } from '@angular/forms';
-import { OperationalInformation } from '../operationalInformation';
+import { OperationalInformation } from '../Models/operationalInformation';
 import { DatePipe } from '@angular/common';
 import { Router } from '@angular/router';
 import { SharedFunctions } from '../shared/sharedFunctions';
-import { State } from '../state';
+import { State } from '../Models/state';
 
 @Component({
   selector: 'app-request-operation',

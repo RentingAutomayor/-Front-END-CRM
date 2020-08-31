@@ -1,14 +1,14 @@
 import { Component, OnInit } from '@angular/core';
-import { RequestRenting } from '../requestRenting';
+import { RequestRenting } from '../Models/requestRenting';
 import { RequestService } from '../Services/request.service';
-import { User } from '../user';
+import { User } from '../Models/user';
 import { UserService } from '../Services/user.service';
 import { Router } from '@angular/router';
-import { ModulesByApp, PermissionType } from '../Enums';
+import { ModulesByApp, PermissionType } from '../Models/Enums';
 import { FormGroup, FormControl } from '@angular/forms';
-import { Probability } from '../probability';
-import { State } from '../state';
-import { ResponseApi } from '../responseApi';
+import { Probability } from '../Models/probability';
+import { State } from '../Models/state';
+import { ResponseApi } from '../Models/responseApi';
 import {NgxPaginationModule} from 'ngx-pagination';
 
 @Component({

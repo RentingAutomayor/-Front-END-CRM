@@ -5,9 +5,9 @@ import { Observable, of } from 'rxjs';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 /*Importamos las librerias para el manejo de excepciones*/
 import { catchError, map, tap } from 'rxjs/operators';
-import {User} from '../user';
-import { Login } from '../login';
-import { ResponseApi } from '../responseApi';
+import {User} from '../Models/user';
+import { Login } from '../Models/login';
+import { ResponseApi } from '../Models/responseApi';
 
 @Injectable({
   providedIn: 'root'
@@ -25,6 +25,7 @@ export class UserService {
 
   oUserSelected:User;
   oUserAuthenticated:User;
+  private results:ResponseApi;
   constructor(private http: HttpClient) { }
 
   addUser(user:User):Observable<User>{
@@ -80,7 +81,12 @@ export class UserService {
   async authUser(login:Login):Promise<ResponseApi>{
     let urlAuth = this.urlApi + '/authUser';
     return this.http.post<ResponseApi>(urlAuth,login,this.HttpOptions).toPromise();
+          
   }
+
+  
+  
+
 
 
 

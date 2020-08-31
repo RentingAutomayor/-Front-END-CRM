@@ -1,16 +1,16 @@
 import { Component, OnInit, HostBinding, ɵConsole, Input,Output,EventEmitter,OnChanges,SimpleChange} from '@angular/core';
 import { PersonService } from '../Services/person.service';
-import { Person } from '../person';
-import { Client } from '../client';
+import { Person } from '../Models/person';
+import { Client } from '../Models/client';
 import { ClientService } from '../Services/client.service';
-import { EconomicActivity } from '../EconomicActivity';
+import { EconomicActivity } from '../Models/EconomicActivity';
 import { EconomicActivityService } from '../Services/economic-activity.service';
-import { Contact } from '../contact';
+import { Contact } from '../Models/contact';
 import { concat } from 'rxjs';
-import { Canal } from '../canal';
+import { Canal } from '../Models/canal';
 import { CanalService } from '../Services/canal.service';
 import { FormControl } from '@angular/forms';
-import { ResponseApi } from '../responseApi';
+import { ResponseApi } from '../Models/responseApi';
 
 @Component({
   selector: 'app-client',

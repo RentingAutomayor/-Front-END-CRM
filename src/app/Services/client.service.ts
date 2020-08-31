@@ -1,14 +1,14 @@
 import { Injectable } from '@angular/core';
-import { Client } from '../client';
-import { Contact } from '../contact';
+import { Client } from '../Models/client';
+import { Contact } from '../Models/contact';
 
 import { Observable, of } from 'rxjs';
 /*importamos la libreria para el manejo de HTTP */
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 /*Importamos las librerias para el manejo de excepciones*/
 import { catchError, map, tap } from 'rxjs/operators';
-import { Branch } from '../branch';
-import { ResponseApi } from '../responseApi';
+import { Branch } from '../Models/branch';
+import { ResponseApi } from '../Models/responseApi';
 
 @Injectable({
   providedIn: 'root'

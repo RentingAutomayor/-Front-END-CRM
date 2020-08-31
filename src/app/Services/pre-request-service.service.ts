@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
-import { PreClient } from '../PreClient';
-import { ResponseApi } from '../responseApi';
-import { PreRequest } from '../PreRequest';
+import { PreClient } from '../Models/PreClient';
+import { ResponseApi } from '../Models/responseApi';
+import { PreRequest } from '../Models/PreRequest';
 
 
 

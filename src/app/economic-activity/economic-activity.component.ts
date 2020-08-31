@@ -1,7 +1,7 @@
 import { Component, OnInit, Input, OnChanges, SimpleChange } from '@angular/core';
 /*Importamos el servicio */
 import { EconomicActivityService } from '../Services/economic-activity.service';
-import { EconomicActivity } from '../EconomicActivity';
+import { EconomicActivity } from '../Models/EconomicActivity';
 import { FormGroup, FormControl } from '@angular/forms';
 
 @Component({

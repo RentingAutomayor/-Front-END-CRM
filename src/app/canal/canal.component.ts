@@ -1,6 +1,6 @@
 import { Component, OnInit , OnChanges,SimpleChange, Input} from '@angular/core';
 import { CanalService } from '../Services/canal.service';
-import { Canal } from '../canal';
+import { Canal } from '../Models/canal';
 import { FormControl,FormsModule } from '@angular/forms';
 
 @Component({

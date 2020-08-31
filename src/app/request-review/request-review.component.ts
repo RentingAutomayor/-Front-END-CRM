@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { RequestRenting } from '../RequestRenting';
+import { RequestRenting } from '../Models/RequestRenting';
 import { RequestService } from '../Services/request.service';
 import { Router } from '@angular/router';
 import { SharedFunctions } from '../shared/sharedFunctions';

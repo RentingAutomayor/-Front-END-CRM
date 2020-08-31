@@ -5,7 +5,7 @@ import {Observable, of} from 'rxjs';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { catchError,map,tap } from 'rxjs/operators';
 /*Modelo */
-import { EconomicActivity } from '../EconomicActivity';
+import { EconomicActivity } from '../Models/EconomicActivity';
 
 @Injectable({
   providedIn: 'root'

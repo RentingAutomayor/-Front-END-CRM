@@ -1,6 +1,6 @@
 import { Component, OnInit, Input ,SimpleChange, OnChanges} from '@angular/core';
 import { FormControl,FormsModule } from '@angular/forms';
-import { State } from '../state';
+import { State } from '../Models/state';
 import { RequestService } from '../Services/request.service';
 
 @Component({

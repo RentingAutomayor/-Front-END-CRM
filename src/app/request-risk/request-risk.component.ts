@@ -1,10 +1,10 @@
 import { Component, OnInit } from '@angular/core';
-import { State } from '../state';
+import { State } from '../Models/state';
 import { RequestService } from '../Services/request.service';
-import { RequestRenting } from '../RequestRenting';
+import { RequestRenting } from '../Models/RequestRenting';
 import { FormGroup, FormControl } from '@angular/forms';
-import { ResponseApi } from '../responseApi';
-import { RiskInformation } from '../riskInformation';
+import { ResponseApi } from '../Models/responseApi';
+import { RiskInformation } from '../Models/riskInformation';
 import { Router } from '@angular/router';
 import { SharedFunctions } from '../shared/sharedFunctions';
 

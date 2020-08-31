@@ -5,7 +5,7 @@ import { Observable, of } from 'rxjs';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { catchError, map, tap } from 'rxjs/operators';
 /*Importamos el modelo */
-import { Canal } from '../canal';
+import { Canal } from '../Models/canal';
 
 @Injectable({
   providedIn: 'root'

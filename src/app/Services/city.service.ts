@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
-import { Department } from '../department';
-import { City } from '../city';
+import { Department } from '../Models/department';
+import { City } from '../Models/city';
 /*Para métodos asincronos se debe implementar el uso de observables*/
 import {Observable, of} from 'rxjs';
 /*Se deben importar las librerias para el amnejo de HTTP*/

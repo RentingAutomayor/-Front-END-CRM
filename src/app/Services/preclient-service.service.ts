@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { PreClient } from '../PreClient';
-import { ResponseApi } from '../responseApi';
+import { PreClient } from '../Models/PreClient';
+import { ResponseApi } from '../Models/responseApi';
 import { Observable, of } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 

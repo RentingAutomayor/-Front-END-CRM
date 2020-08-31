@@ -1,15 +1,15 @@
 import { Component, OnInit, Input, Output, OnChanges, SimpleChange, EventEmitter } from '@angular/core';
-import { Contact } from '../contact';
+import { Contact } from '../Models/contact';
 import { FormGroup, FormControl } from '@angular/forms';
 import { JobTitlesService } from '../Services/job-titles.service';
-import { JobTitle } from '../jobTitle';
+import { JobTitle } from '../Models/jobTitle';
 import { PersonService } from '../Services/person.service';
-import { Person } from '../person';
-import { Client } from '../client';
+import { Person } from '../Models/person';
+import { Client } from '../Models/client';
 import { ClientService } from '../Services/client.service';
-import { Branch } from '../branch';
+import { Branch } from '../Models/branch';
 import { SharedFunctions } from '../shared/sharedFunctions';
-import { promise } from 'protractor';
+
 
 
 @Component({

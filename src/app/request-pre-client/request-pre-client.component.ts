@@ -1,12 +1,12 @@
 import { Component, OnInit, Output, EventEmitter, Input } from '@angular/core';
-import { Canal } from '../canal';
+import { Canal } from '../Models/canal';
 import { CanalService } from '../Services/canal.service';
-import { VehicleModel } from '../VehicleModel';
+import { VehicleModel } from '../Models/VehicleModel';
 import { VehicleModelService } from '../Services/vehicle-model.service';
-import { State } from '../state';
+import { State } from '../Models/state';
 import { RequestService } from '../Services/request.service';
-import { PreRequest } from '../PreRequest';
-import { PreClient } from '../PreClient';
+import { PreRequest } from '../Models/PreRequest';
+import { PreClient } from '../Models/PreClient';
 import { PersonService } from '../Services/person.service';
 import { UserService } from '../Services/user.service';
 import { PreRequestServiceService } from '../Services/pre-request-service.service';

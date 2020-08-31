@@ -1,7 +1,7 @@
 import { Component, OnInit , Input,OnChanges,SimpleChange} from '@angular/core';
 import { FormControl,FormsModule } from '@angular/forms';
 import { VehicleModelService } from '../Services/vehicle-model.service';
-import { VehicleModel } from '../VehicleModel';
+import { VehicleModel } from '../Models/VehicleModel';
 
 @Component({
   selector: 'app-vehicle-model',

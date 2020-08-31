@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
-import { Person } from '../person';
-import { ResponseApi } from '../responseApi';
-import { kindOfDocument } from '../kindOfDocument';
+import { Person } from '../Models/person';
+import { ResponseApi } from '../Models/responseApi';
+import { kindOfDocument } from '../Models/kindOfDocument';
 import { FormGroup } from '@angular/forms';
 
 @Injectable({

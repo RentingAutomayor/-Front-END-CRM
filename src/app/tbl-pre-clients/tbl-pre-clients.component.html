@@ -1,9 +1,61 @@
 <app-navigation></app-navigation>
 <div class="preClients-container w-75">
     <h1>Gestión persona natural</h1>
+    <div class="container-filter">
+        <form [formGroup]="frmFilter">
+            <h6>Búsqueda de datos</h6>
+            <div class="form-row mb-4">
+                <div class="col-4">
+                    <select class="browser-default custom-select" formControlName="cmbKindOfFilter"
+                        (change)="setKindOfFilter()">
+                        <option disabled>Seleccione ... </option>
+                        <option [value]="'id'">Código</option>
+                        <option [value]="'client'">Cliente</option>
+                        <option [value]="'vehicleModel'">Tipo de vehículo</option>
+                        <option [value]="'stateRequest'">Estado de la solicitud</option>
+                        <option [value]="'firstCanal'">Canal primario</option>
+                        <option [value]="'secondCanal'">Canal secundario</option>
+                    </select>
+                </div>
+                <div class="col-4">
+                    <input type="text" class="form-control" formControlName="txtValue" *ngIf="filterIdIsVisible || filterClientIsVisible"
+                            placeholder="valor a buscar ..." (input)="verifyContent()">
+
+                    <select class="browser-default custom-select" formControlName="cmbVehicleModel" *ngIf="filterVehicleModelIsVisible">
+                        <option>Seleccione... </option>
+                        <option *ngFor="let vehicleModel of oLsVehicleModel" [value]="vehicleModel.id">{{vehicleModel.name}}</option>
+                    </select>
+
+                    <select class="browser-default custom-select" formControlName="cmbStateRequest" *ngIf="filterStateRequestIsVisible">
+                        <option>Seleccione... </option>
+                        <option *ngFor="let stateRequest of oLsStateRequest" [value]="stateRequest.id">{{stateRequest.description}}</option>
+                    </select>
+
+                    <select class="browser-default custom-select" formControlName="cmbFirstCanal" *ngIf="filterFirstCanalIsVisible">
+                        <option>Seleccione... </option>
+                        <option *ngFor="let firstCanal of oLsFirstCanal" [value]="firstCanal.id">{{firstCanal.description}}</option>
+                    </select>
+
+                    <select class="browser-default custom-select" formControlName="cmbSecondCanal" *ngIf="filterSecondCanalIsVisible">
+                        <option>Seleccione... </option>
+                        <option *ngFor="let secondCanal of oLsSecondCanal" [value]="secondCanal.id">{{secondCanal.description}}</option>
+                    </select>
+
+
+                </div>
+                <div class="col-4">
+                    <button class="btn btn-outline-primary btn-md waves-effect btn-filter"
+                    (click)="filterRequests()">Filtrar solicitudes</button>
+
+                    <button class="btn btn-outline-danger btn-md waves-effect btn-filter"
+                    (click)="deleteFilter()" *ngIf="isFiltred">Quitar filtros</button>
+
+                </div>
+            </div>
+        </form>
+    </div>
     <div class="container-table">
-        <button class="btn-add btn-info" (click)="NewPreRequest()"><i
-            class="fas fa-plus"></i></button>
+        <button class="btn-add btn-info" (click)="NewPreRequest()"><i class="fas fa-plus"></i></button>
         <table class="table table-striped">
             <thead>
                 <th>#</th>
@@ -11,7 +63,7 @@
                 <th>Celular</th>
                 <th>Correo</th>
                 <th>Vehiculo</th>
-                <th>Estado</th>                
+                <th>Estado</th>
                 <th>Canal secundario</th>
                 <th>Fecha de registro</th>
                 <th>Acciones</th>
@@ -23,23 +75,23 @@
                     <td>{{ preRequest.preClient.cellPhone }}</td>
                     <td>{{ preRequest.preClient.email }}</td>
                     <td>{{ preRequest.vehicleModel.name }}</td>
-                    <td>{{ preRequest.stateRequest.description }}</td>                    
+                    <td>{{ preRequest.stateRequest.description }}</td>
                     <td>{{ GetCanalDescription(preRequest.secondCanal.id) }}</td>
                     <td>{{ preRequest.registrationDate | date:'yyyy/MM/dd hh:mm:ss' }}</td>
                     <td>
-                        <i class="fas fa-info-circle text-info btn-actions" title="Más información" 
-                        (click)="viewRequestReview(request)"></i>
-                    <i class="fas fa-edit text-warning btn-actions" title="Modificar"
-                        (click)="markPreRequestToEdit(preRequest)"></i>
-                    <i class="fas fa-trash-alt text-danger btn-actions" (click)="DeletePreRequest(preRequest.id)"
-                        title="Eliminar"></i>
+                        <i class="fas fa-info-circle text-info btn-actions" title="Más información"
+                            (click)="viewRequestReview(request)"></i>
+                        <i class="fas fa-edit text-warning btn-actions" title="Modificar"
+                            (click)="markPreRequestToEdit(preRequest)"></i>
+                        <i class="fas fa-trash-alt text-danger btn-actions" (click)="DeletePreRequest(preRequest.id)"
+                            title="Eliminar"></i>
 
                     </td>
                 </tr>
             </tbody>
             <div class="paginationContainer">
                 <pagination-controls (pageChange)="p = $event"></pagination-controls>
-            </div>               
+            </div>
         </table>
     </div>
 </div>

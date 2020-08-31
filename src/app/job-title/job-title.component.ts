@@ -1,5 +1,5 @@
 import { Component, OnInit, Input } from '@angular/core';
-import {  JobTitle } from '../jobTitle';
+import {  JobTitle } from '../Models/jobTitle';
 import {  JobTitlesService } from '../Services/job-titles.service';
 /*Para que sirva los pipes de observables se deben importar alkgunas librerias */
 import { Observable , Subject } from 'rxjs';

@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl } from '@angular/forms';
 import { connectableObservableDescriptor } from 'rxjs/internal/observable/ConnectableObservable';
-import { Login } from '../login';
+import { Login } from '../Models/login';
 import { UserService } from '../Services/user.service';
-import { ResponseApi } from '../responseApi';
+import { ResponseApi } from '../Models/responseApi';
 import { Router } from '@angular/router';
 
 @Component({

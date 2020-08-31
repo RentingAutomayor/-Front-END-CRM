@@ -1,6 +1,6 @@
 import { Component, OnInit, Input, Output, EventEmitter, OnChanges, SimpleChange } from '@angular/core';
 import { KindOfDocumentService } from '../Services/kind-of-document.service';
-import { kindOfDocument } from '../kindOfDocument';
+import { kindOfDocument } from '../Models/kindOfDocument';
 /*
   Para el amnejo de formularios se pueden utilizar dos arquitecturas
   1. Reacive forms : permiten que el flujo de datos dentro del formulario y el modelo sea Sincrona
@@ -15,26 +15,26 @@ import { kindOfDocument } from '../kindOfDocument';
 import { FormGroup, FormControl } from '@angular/forms';
 import { UserService } from '../Services/user.service';
 import { PersonService } from '../Services/person.service';
-import { Person } from '../person';
+import { Person } from '../Models/person';
 import { PreclientServiceService } from '../Services/preclient-service.service';
 
 import { CityService } from '../Services/city.service';
-import { City } from '../city';
+import { City } from '../Models/city';
 
-import { Client } from '../client';
+import { Client } from '../Models/client';
 import { ClientService } from '../Services/client.service';
 
 /*Para que sirva los pipes de observables se deben importar alkgunas librerias */
 import { Observable, Subject } from 'rxjs';
 import { debounceTime, distinctUntilChanged, switchMap } from 'rxjs/operators';
-import { EconomicActivity } from '../EconomicActivity';
+import { EconomicActivity } from '../Models/EconomicActivity';
 import { EconomicActivityService } from '../Services/economic-activity.service';
-import { Contact } from '../contact';
-import { Canal } from '../canal';
+import { Contact } from '../Models/contact';
+import { Canal } from '../Models/canal';
 import { CanalService } from '../Services/canal.service';
-import { ResponseApi } from '../responseApi';
-import { PreClient } from '../PreClient';
-import { type } from 'os';
+import { ResponseApi } from '../Models/responseApi';
+import { PreClient } from '../Models/PreClient';
+
 
 
 @Component({
@@ -294,7 +294,7 @@ export class PersonComponent implements OnInit {
       }
 
 
-      //console.log(objCity);
+      console.log("[Cellphone] : "+ cellPhone);
 
       this.objPerson.id = id;
       this.objPerson.kindOfDocument = kindOfDoc;
@@ -398,6 +398,26 @@ export class PersonComponent implements OnInit {
     console.log(pPreclient);
   }
 
+  pasteEvent(event: ClipboardEvent,control:string){
+
+    // console.log("["+control+"] : " + event.clipboardData.getData('text'));
+
+    // let valuePasted =  event.clipboardData.getData('text');
+    // switch(control){
+    //   case 'txtEmail':
+    //       this.formPerson.controls.txtEmail.setValue(valuePasted);
+    //     break;
+    //   case 'txtCellPhone':
+    //       this.formPerson.controls.txtCellPhone.setValue(valuePasted);
+    //     break;
+    // }
+  }
+
+  setValueSetted(event){
+   // this.formPerson.controls.txtCellPhone.setValue(event.target.value);
+  }
+
+ 
 
   ngOnChanges(changes: { [propKey: string]: SimpleChange }) {
     console.warn(changes);

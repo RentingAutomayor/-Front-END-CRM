@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { RequestService } from '../Services/request.service';
-import { RequestRenting } from '../RequestRenting';
-import { Client } from '../client';
+import { RequestRenting } from '../Models/RequestRenting';
+import { Client } from '../Models/client';
 
 @Component({
   selector: 'app-update-request',

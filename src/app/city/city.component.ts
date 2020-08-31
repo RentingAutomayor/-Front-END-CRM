@@ -1,6 +1,6 @@
 import { Component, OnInit, Input, OnChanges, SimpleChange } from '@angular/core';
-import { City } from '../city';
-import { Department } from '../department';
+import { City } from '../Models/city';
+import { Department } from '../Models/department';
 /*Importamos el servicio que traera los datos de los departamentos y las ciudades */
 import { CityService } from '../Services/city.service';
 import { FormGroup, FormControl } from '@angular/forms';

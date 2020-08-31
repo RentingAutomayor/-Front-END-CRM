@@ -52,7 +52,10 @@
                         <label for="#">Celular</label>
                         <input type="number" placeholder="Celular..." class="form-control"
                             formControlName="txtCellPhone" #txtCellphone
-                            (input)="searchPerson('cellphone|'+txtCellphone.value)">
+                            (input)="searchPerson('cellphone|'+txtCellphone.value)"                            
+                            (paste)="pasteEvent($event,'txtCellPhone')"
+                            (keydown.enter)="setValueSetted($event)"
+                            >
 
                         <div *ngIf="isLsPreClient && isTxtCellphoneActive">
                             <ul>
@@ -65,7 +68,9 @@
                     <div class="col-6">
                         <label for="#">Correo electrónico</label>
                         <input type="email" placeholder="Email..." class="form-control" formControlName="txtEmail"
-                            #txtEmail (input)="searchPerson('email|'+txtEmail.value)">
+                            #txtEmail (input)="searchPerson('email|'+txtEmail.value)"
+                            (paste)="pasteEvent($event,'txtEmail')"
+                            >
                         <div *ngIf="isLsPreClient && isTxtEmailActive">
                             <ul>
                                 <li *ngFor="let preClient of lsPreClient$ | async"

@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { kindOfDocument } from '../kindOfDocument';
+import { kindOfDocument } from '../Models/kindOfDocument';
 
 /*Para métodos asincronos se debe implementar el uso de observables*/
 import {Observable, of} from 'rxjs';

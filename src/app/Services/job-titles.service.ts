@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { JobTitle } from '../jobTitle';
+import { JobTitle } from '../Models/jobTitle';
 /*Para métodos asincronos se debe implementar el uso de observables*/
 import { Observable, of } from 'rxjs';
 /*Se deben importar las librerias para el amnejo de HTTP*/

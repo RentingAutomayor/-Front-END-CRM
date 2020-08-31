@@ -1,16 +1,16 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
-import { Probability } from '../probability';
+import { Probability } from '../Models/probability';
 import { RequestService } from '../Services/request.service';
-import { State } from '../state';
+import { State } from '../Models/state';
 import { FormGroup, FormControl } from '@angular/forms';
-import { User } from '../user';
+import { User } from '../Models/user';
 import { UserService } from '../Services/user.service';
-import { RequestRenting } from '../RequestRenting';
-import { Client } from '../client';
+import { RequestRenting } from '../Models/RequestRenting';
+import { Client } from '../Models/client';
 import { ClientService } from '../Services/client.service';
-import { Contact } from '../contact';
+import { Contact } from '../Models/contact';
 import { AllyServiceService } from '../Services/ally-service.service';
-import { ResponseApi } from '../responseApi';
+import { ResponseApi } from '../Models/responseApi';
 import { Router } from '@angular/router';
 
 
