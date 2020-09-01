@@ -93,6 +93,7 @@ export class PersonComponent implements OnInit {
       txtName: new FormControl(''),
       txtLastName: new FormControl(''),
       txtCellPhone: new FormControl(''),
+      txtPhone: new FormControl(''),
       txtEmail: new FormControl('')
 
     });
@@ -215,12 +216,14 @@ export class PersonComponent implements OnInit {
     this.formPerson.controls.txtLastName.setValue(pPerson.lastName);
     this.formPerson.controls.txtEmail.setValue(pPerson.email);
     this.formPerson.controls.txtCellPhone.setValue(pPerson.cellPhone);
+    this.formPerson.controls.txtPhone.setValue(pPerson.phone);
 
     if (pPerson.kindOfDocument.description.toUpperCase() == 'NIT') {
       this.isNaturalPerson = false;
       this.formPerson.controls.txtLastName.setValue("");
       this.formPerson.controls.txtEmail.setValue("");
       this.formPerson.controls.txtCellPhone.setValue("");
+      this.formPerson.controls.txtPhone.setValue("");
     } else {
       this.isNaturalPerson = true;
     }
@@ -244,12 +247,14 @@ export class PersonComponent implements OnInit {
     this.formPerson.controls.txtLastName.setValue(pClient.lastName);
     this.formPerson.controls.txtEmail.setValue(pClient.email);
     this.formPerson.controls.txtCellPhone.setValue(pClient.cellPhone);
+    this.formPerson.controls.txtPhone.setValue(pClient.phone);
 
     if (pClient.kindOfDocument.description.toUpperCase() == 'NIT') {
       this.isNaturalPerson = false;
       this.formPerson.controls.txtLastName.setValue("");
       this.formPerson.controls.txtEmail.setValue("");
       this.formPerson.controls.txtCellPhone.setValue("");
+      this.formPerson.controls.txtPhone.setValue("");
     } else {
       this.isNaturalPerson = true;
     }
@@ -285,22 +290,27 @@ export class PersonComponent implements OnInit {
 
       let lastName = "";
       let cellPhone = "";
+      let phone ="";
       let email = "";
+
 
       if (oKindOfDocument.description.toUpperCase() != 'NIT') {
         lastName = this.formPerson.controls.txtLastName.value;
         cellPhone = this.formPerson.controls.txtCellPhone.value;
+        phone = this.formPerson.controls.txtPhone.value;
         email = this.formPerson.controls.txtEmail.value;
       }
 
 
       console.log("[Cellphone] : "+ cellPhone);
+      console.log("[Phone] :  " + phone);
 
       this.objPerson.id = id;
       this.objPerson.kindOfDocument = kindOfDoc;
       this.objPerson.name = name;
       this.objPerson.lastName = lastName;
       this.objPerson.cellPhone = cellPhone;
+      this.objPerson.phone = phone;
       this.objPerson.email = email;
       this.objPerson.city = objCity;
 

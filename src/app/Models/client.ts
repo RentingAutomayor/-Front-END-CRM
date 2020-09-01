@@ -14,6 +14,7 @@ export class Client extends Person{
         this.name = paramPerson.name;
         this.lastName = paramPerson.lastName;       
         this.cellPhone = paramPerson.cellPhone;
+        this.phone = paramPerson.phone;
         this.email = paramPerson.email;
         this.city = paramPerson.city;
         this.economicActivity = paramEconAct;

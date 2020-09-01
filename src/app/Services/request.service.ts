@@ -28,10 +28,12 @@ export class RequestService {
 
   async getAllRequest(): Promise<RequestRenting[]> {
     let urlGetAllRequest = this.urlApi + '/GetAllRequest';
-    return this.http.get<RequestRenting[]>(urlGetAllRequest).toPromise();
-    // .pipe(
-    //   catchError(this.handleError<RequestRenting[]>('getAllRequest', []))
-    // );
+    return this.http.get<RequestRenting[]>(urlGetAllRequest).toPromise();    
+  }
+
+  async GetRequestByFilter(kindOfFilter:string, value:string):Promise<RequestRenting[]>{
+    let urlFilter = this.urlApi + '/GetRequestByFilter?pKindOfFilter='+kindOfFilter+'&pValue='+value;
+    return this.http.get<RequestRenting[]>(urlFilter).toPromise();
   }
 
   async addNewRequest(pRequest: RequestRenting): Promise<ResponseApi> {

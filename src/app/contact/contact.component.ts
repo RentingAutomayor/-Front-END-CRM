@@ -41,6 +41,7 @@ export class ContactComponent implements OnInit {
         txtName: new FormControl(''),
         txtLastName: new FormControl(''),
         txtCellPhone: new FormControl(''),
+        txtPhone: new FormControl(''),
         txtAdress: new FormControl(''),
         txtEmail: new FormControl(''),
       });
@@ -81,6 +82,7 @@ export class ContactComponent implements OnInit {
     contact.email = this.formContact.controls.txtEmail.value;
     contact.adress = this.formContact.controls.txtAdress.value;
     contact.cellPhone = this.formContact.controls.txtCellPhone.value;
+    contact.phone = this.formContact.controls.txtPhone.value;
 
     let emailOk = this.oSharedFuntions.validateEmail(contact.email);
     let cellPhoneOk = this.oSharedFuntions.validateCellphone(contact.cellPhone);
@@ -89,18 +91,13 @@ export class ContactComponent implements OnInit {
       //contact.client = client;
       console.log("[Contacto a añadir]");
       console.log(contact);
-
       this.listOfContacts.push(contact);
-
       this.formContact.reset();
       this.jobTitleSelected = new JobTitle();
       this.jobTitleSelected.id = 0;
       this.jobTitleSelected.description = "";
-
       this.jobTitleService.setJobTitleSelected(this.jobTitleSelected.description);
-      this.clientService.setContacts(this.listOfContacts);
-
-    
+      this.clientService.setContacts(this.listOfContacts);  
      
       
     } else {

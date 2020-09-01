@@ -224,43 +224,43 @@ export class TblRequestsComponent implements OnInit {
       this.lsRequest = this.lsRequestTemp;
     }
   }
+
   deleteFilter() {
+
     this.lsRequest = this.lsRequestTemp;
     this.frmFilter.controls.txtValue.setValue('');
     this.frmFilter.controls.txtRegistrationDate.setValue('');
     this.isFiltred = false;
+    
   }
 
-  filterRequests() {
+  async filterRequests() {
     this.p = 1;
     this.isFiltred = true;
     // alert("Buscando filtros " + this.frmFilter.controls.cmbKindOfFilter.value + ' ' + this.frmFilter.controls.txtValue.value ) ;
     let kindOfFilter = this.frmFilter.controls.cmbKindOfFilter.value;
+    let filterValue = "";
     //console.warn("[Tipo de filtro]: "+kindOfFilter);
     if (kindOfFilter == 'id') {
-      let idRequest = this.frmFilter.controls.txtValue.value;
-      console.log("[Id de la solicitud filtrada]:" + idRequest);
-      this.lsRequest = this.lsRequestTemp.filter(r => r.id.toString().includes(idRequest));
+       filterValue = this.frmFilter.controls.txtValue.value;     
     } else if (kindOfFilter == 'client') {
-      let valueOfClient = this.frmFilter.controls.txtValue.value;
-      
-      this.lsRequest = this.lsRequestTemp.filter(r => r.client.name.toUpperCase().includes(valueOfClient.toUpperCase())|| r.client.id.includes(valueOfClient));
+       filterValue = this.frmFilter.controls.txtValue.value;     
     } else if (kindOfFilter == 'probability') {
-      let valueOfProbability = this.frmFilter.controls.cmbProbability.value;
-      this.lsRequest = this.lsRequestTemp.filter(r => r.probability.id == valueOfProbability);
+       filterValue = this.frmFilter.controls.cmbProbability.value;
     } else if (kindOfFilter == 'user') {
-      let valueOfUser = this.frmFilter.controls.cmbUser.value;
-      this.lsRequest = this.lsRequestTemp.filter(r => r.user.id == valueOfUser);
+       filterValue = this.frmFilter.controls.cmbUser.value;
     } else if (kindOfFilter == 'parentState') {
-      let valueOfParentstate = this.frmFilter.controls.cmbParentState.value;
-      this.lsRequest = this.lsRequestTemp.filter(r => r.parentState.id == valueOfParentstate);
+       filterValue = this.frmFilter.controls.cmbParentState.value;
     } else if (kindOfFilter == 'childState') {
-      let valueOfChildState = this.frmFilter.controls.cmbChildState.value;
-      this.lsRequest = this.lsRequestTemp.filter(r => r.childState.id == valueOfChildState);
+       filterValue = this.frmFilter.controls.cmbChildState.value;
     } else if (kindOfFilter == 'registrationDate') {
-      let registrationDate = this.frmFilter.controls.txtRegistrationDate.value;
-      this.lsRequest = this.lsRequestTemp.filter(r => r.registrationDate.toString().substr(0, 10) == registrationDate);
+       filterValue = this.frmFilter.controls.txtRegistrationDate.value;
+       filterValue = filterValue.replace(/-/g,'/');
     }
+    this.isAwaiting = true;
+    this.lsRequest = await this.requestService.GetRequestByFilter(kindOfFilter,filterValue);
+    this.isAwaiting = false;
+
   }
 
   async generateFile() {
