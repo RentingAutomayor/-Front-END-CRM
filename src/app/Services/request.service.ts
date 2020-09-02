@@ -42,6 +42,11 @@ export class RequestService {
 
   }
 
+  async GetRequestById(pRequest_id:number):Promise<RequestRenting>{
+    let urlGetRequestById = this.urlApi + '/GetRequestById?pRequest_id='+pRequest_id;
+    return this.http.get<RequestRenting>(urlGetRequestById).toPromise();
+  }
+
   
   async updateRequest(pRequest: RequestRenting): Promise<ResponseApi> {
     let urlAddRequest = this.urlApi + '/updateRequest';
@@ -95,6 +100,8 @@ export class RequestService {
   getRequestToView():RequestRenting{
     return this.requestToView;
   }
+
+
 
   
   async updateRiskInformation(pRquest: RequestRenting): Promise<ResponseApi> {

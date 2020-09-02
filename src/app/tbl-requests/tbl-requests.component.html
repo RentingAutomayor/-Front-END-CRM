@@ -85,9 +85,9 @@
                     <td>{{ (request.user.name +' '+ request.user.lastName) | titlecase }}</td>
                     <td>
                         <i class="fas fa-info-circle text-info" title="Más información" *ngIf="readIsAllowed"
-                            (click)="viewRequestReview(request)"></i>
+                            (click)="viewRequestReview(request.id)"></i>
                         <i class="fas fa-edit text-warning" title="Modificar"
-                            (click)="markRequestToEdit(request);updateModal.show()" *ngIf="updateIsAllowed"></i>
+                            (click)="markRequestToEdit(request.id);updateModal.show()" *ngIf="updateIsAllowed"></i>
                         <i class="fas fa-trash-alt text-danger" (click)="basicModal.show();markRequestToDelete(request)"
                             title="Eliminar" *ngIf="deleteIsAllowed"></i>
                     </td>

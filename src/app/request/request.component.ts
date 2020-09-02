@@ -7,11 +7,14 @@ import { User } from '../Models/user';
 import { UserService } from '../Services/user.service';
 import { RequestRenting } from '../Models/RequestRenting';
 import { Client } from '../Models/client';
+import { Canal} from '../Models/canal';
 import { ClientService } from '../Services/client.service';
 import { Contact } from '../Models/contact';
 import { AllyServiceService } from '../Services/ally-service.service';
 import { ResponseApi } from '../Models/responseApi';
 import { Router } from '@angular/router';
+import { CanalService } from '../Services/canal.service';
+import { NavigationService } from '../Services/navigation.service';
 
 
 @Component({
@@ -39,6 +42,9 @@ export class RequestComponent implements OnInit {
   oUserAuth:User;
   @Input() oRequestToUpdate:RequestRenting;
   isANewRequest:boolean;
+  @Input() oCanalSelected:Canal;
+  canalGroup_id:number;
+  canalClientProspect = 2;
 
 
 
@@ -47,6 +53,8 @@ export class RequestComponent implements OnInit {
     private userService: UserService,
     private clientService: ClientService,
     private allyService:AllyServiceService,
+    private canalService :CanalService,
+    private navigationService: NavigationService,
     private router:Router
   ) {
     this.frmRequest = new FormGroup({
@@ -56,11 +64,14 @@ export class RequestComponent implements OnInit {
       cmbProbability: new FormControl('Seleccione ...'),
       cmbParentState: new FormControl('Seleccione ...'),
       cmbChildState: new FormControl('Seleccione ...'),
-      btnSaveRequest: new FormControl('Guardar solicitud')
+      btnSaveRequest: new FormControl('Guardar solicitud'),
+      txtObservation: new FormControl('')
     });
   }
 
   async ngOnInit() {
+    
+    this.canalGroup_id = this.canalClientProspect;
     this.lsProbabilities = await this.requestService.getProbabilities();
     this.lsParentState = await this.requestService.getParentStates("COMERCIAL");
     this.lsAccountManagerBank = await this.allyService.getAccountmanagers();
@@ -74,6 +85,7 @@ export class RequestComponent implements OnInit {
       //alert("Se debe mostrar la información de la solicitud");
       console.log(this.oRequestToUpdate);
       this.setRequestToUpdate(this.oRequestToUpdate);
+     
       this.isANewRequest = false;
     }else{
       this.isANewRequest = true;
@@ -83,6 +95,7 @@ export class RequestComponent implements OnInit {
   }
 
   setRequestToUpdate(pRequest:RequestRenting){
+    //TODO: validate that changes
     this.frmRequest.controls.cmbAccounManager.setValue(pRequest.contact.id);
     
     if(pRequest.initialDate != null){
@@ -101,6 +114,11 @@ export class RequestComponent implements OnInit {
     this.setProbability(pRequest.probability.id);
     this.setParentState(pRequest.parentState.id);
     this.oSelectedChildState = pRequest.childState;
+
+    this.oCanalSelected = pRequest.canal;
+    this.canalService.setSelectedCanal(this.oCanalSelected);
+    this.frmRequest.controls.txtObservation.setValue(pRequest.observation);
+
   }
 
   async changeSecondStates(obj: any) {
@@ -142,6 +160,10 @@ export class RequestComponent implements OnInit {
     this.oRequestRenting.client = oClient;
     this.oRequestRenting.contact = this.oSelectedAccountManager;
 
+    let oCanalSelected = this.canalService.getSelectedCanal();
+    this.oRequestRenting.canal = oCanalSelected;
+    this.oRequestRenting.observation = this.frmRequest.controls.txtObservation.value;
+
     console.log(this.oRequestRenting);
 
     if(this.isANewRequest){
@@ -155,8 +177,10 @@ export class RequestComponent implements OnInit {
 
     if(this.oResponseApi.response){
       alert(this.oResponseApi.message);
+
     }
     this.isAwaiting = false;
+    this.navigationService.SetNavigationElement('nav-requests');
     this.router.navigate(['/MasterRequests']);
 
 

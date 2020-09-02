@@ -7,6 +7,7 @@ import { ResponseApi } from '../Models/responseApi';
 import { RiskInformation } from '../Models/riskInformation';
 import { Router } from '@angular/router';
 import { SharedFunctions } from '../shared/sharedFunctions';
+import { NavigationService } from '../Services/navigation.service';
 
 
 
@@ -29,6 +30,7 @@ export class RequestRiskComponent implements OnInit {
 
   constructor(
     private requestService: RequestService,
+    private navigationService: NavigationService,
     private router: Router
   ) {
     this.isApproved = false;
@@ -65,6 +67,7 @@ console.log(this.requestToUpdate.riskInformation.datefiling);
       }
     } else {
       this.router.navigate(["MasterRequests"]);
+      this.navigationService.SetNavigationElement('nav-requests');
     }
 
   }
@@ -136,7 +139,12 @@ console.log(this.requestToUpdate.riskInformation.datefiling);
     let responseApi = await this.requestService.updateRiskInformation(this.requestToUpdate);
 
     alert(responseApi.message);
+    this.navigationService.SetNavigationElement('nav-requests');
+    this.router.navigate(["/MasterRequests"]);
+  }
 
+  BackToMaster(){
+    this.navigationService.SetNavigationElement('nav-requests');
     this.router.navigate(["/MasterRequests"]);
   }
 

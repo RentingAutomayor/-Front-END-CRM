@@ -6,6 +6,11 @@
             <div class="card-body">
 
                 <div class="card-body">
+                    <div class="form-row mb-4">
+                        <div class="col-12">                            
+                            <app-canal [canalSelected]="oCanalSelected" [CanalGroup]="canalGroup_id"></app-canal>                          
+                        </div>
+                    </div> 
 
                     <div class="form-row mb-4">
                         <div class="col-12">
@@ -57,8 +62,12 @@
                                     {{ secondState.description }}</option>
                             </select>
                         </div>
-
-
+                    </div>
+                    <div class="form-row mb-4">
+                        <div class="col-12">
+                            <label>Observaciones</label>
+                           <textarea formControlName="txtObservation" col="30" class="form-control"></textarea>
+                        </div>
                     </div>
                     <button button type="button" class="btn btn-outline-primary btn-md waves-effect btn-actions" *ngIf="isANewRequest" (click)="backToFrmContact()"><i
                             class="fas fa-angle-double-left"></i> Atrás</button>
@@ -78,4 +87,6 @@
         <app-img-loading></app-img-loading>
     </div>
 </div>
+
+
 

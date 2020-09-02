@@ -7,7 +7,7 @@ import { DatePipe } from '@angular/common';
 import { Router } from '@angular/router';
 import { SharedFunctions } from '../shared/sharedFunctions';
 import { State } from '../Models/state';
-
+import { NavigationService } from '../Services/navigation.service';
 @Component({
   selector: 'app-request-operation',
   templateUrl: './request-operation.component.html',
@@ -27,6 +27,7 @@ export class RequestOperationComponent implements OnInit {
 
   constructor(
     private requestService: RequestService,
+    private navigationService:NavigationService,
     private router: Router
   ) {
     this.frmOperationalInformation = new FormGroup({
@@ -104,6 +105,7 @@ export class RequestOperationComponent implements OnInit {
 
     let response = await this.requestService.updateOperationalInformation(this.requestToUpdate);
     alert(response.message);
+    this.navigationService.SetNavigationElement('nav-requests');
     this.router.navigate(["/MasterRequests"]);
 
   }
@@ -163,6 +165,11 @@ export class RequestOperationComponent implements OnInit {
 
   setParentState(idParentState: number) {
     this.oSelectedParentState = this.lsParentState.find(ps => ps.id == idParentState);
+  }
+
+  BackToMaster(){
+    this.navigationService.SetNavigationElement('nav-requests');
+    this.router.navigate(["/MasterRequests"]);
   }
 
 }

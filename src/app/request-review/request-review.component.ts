@@ -3,6 +3,7 @@ import { RequestRenting } from '../Models/RequestRenting';
 import { RequestService } from '../Services/request.service';
 import { Router } from '@angular/router';
 import { SharedFunctions } from '../shared/sharedFunctions';
+import { NavigationService } from '../Services/navigation.service';
 
 @Component({
   selector: 'app-request-review',
@@ -18,6 +19,7 @@ export class RequestReviewComponent implements OnInit {
   sharedFunctions:SharedFunctions;
   constructor(
     private requestService: RequestService,
+    private navigationService: NavigationService,
     private router: Router
   ) { }
 
@@ -54,5 +56,10 @@ export class RequestReviewComponent implements OnInit {
     }else{
       return lastname;
     }
+  }
+
+  BackToMaster(){
+    this.navigationService.SetNavigationElement('nav-requests');
+    this.router.navigate(["MasterRequests"]);
   }
 }

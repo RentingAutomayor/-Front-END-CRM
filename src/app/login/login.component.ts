@@ -38,7 +38,7 @@ export class LoginComponent implements OnInit {
     this.isAwaiting = true;
     responseApi = await this.userService.authUser(logUser);
     this.isAwaiting = false;
-    alert(responseApi.message);
+    //alert(responseApi.message);
     if(responseApi.response){
       this.router.navigate(["/MasterRequests"]);
       this.loginIsInvalid = false;

@@ -6,6 +6,7 @@ import { Probability } from "./probability";
 import { Contact } from "./contact";
 import { RiskInformation } from "./riskInformation";
 import { OperationalInformation } from "./operationalInformation";
+import { Canal } from "./canal";
 
 export class RequestRenting{
     id:number;
@@ -20,5 +21,7 @@ export class RequestRenting{
     contact:Contact;
     riskInformation:RiskInformation;
     operationalInformation:OperationalInformation;
+    canal: Canal;
+    observation:string;
 
 }

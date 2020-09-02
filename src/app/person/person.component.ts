@@ -30,8 +30,6 @@ import { debounceTime, distinctUntilChanged, switchMap } from 'rxjs/operators';
 import { EconomicActivity } from '../Models/EconomicActivity';
 import { EconomicActivityService } from '../Services/economic-activity.service';
 import { Contact } from '../Models/contact';
-import { Canal } from '../Models/canal';
-import { CanalService } from '../Services/canal.service';
 import { ResponseApi } from '../Models/responseApi';
 import { PreClient } from '../Models/PreClient';
 
@@ -61,7 +59,6 @@ export class PersonComponent implements OnInit {
   lsPreClient$: Observable<PreClient[]>;
   oSelectedCity: City;
   oSelectedEconomicActivity: EconomicActivity;
-  oSelectedCanal: Canal;
   private description = new Subject<string>();
   @Output() ClientSetted = new EventEmitter<Client>();
   @Output() frmPersonIsFinished = new EventEmitter<boolean>();
@@ -69,13 +66,12 @@ export class PersonComponent implements OnInit {
   isClientForm: boolean;
   clientExists: boolean;
   oEconomicActSelected: EconomicActivity;
-  oCanalSelected: Canal;
+  
   @Input() frmClientBack: boolean;
   validationForm: ResponseApi;
   frmHasErrors: boolean;
   oClientDB: Client;
-  //Modification of type of canal for the pre client
-  canalGroup_id: number;
+
 
   constructor(
     private kindOfDocsService: KindOfDocumentService,
@@ -84,7 +80,6 @@ export class PersonComponent implements OnInit {
     private cityService: CityService,
     private clientService: ClientService,
     private economicActivityService: EconomicActivityService,
-    private canalService: CanalService,
     private preClientService: PreclientServiceService
   ) {
     this.formPerson = new FormGroup({
@@ -119,14 +114,10 @@ export class PersonComponent implements OnInit {
     this.isTxtEmailActive = false;
 
     //Canal de los clientes
-    this.canalGroup_id = 0;
-
-
-
+    
     if (this.kindOfForm == "client") {
       this.isLsClient = true;
       this.isClientForm = true;
-      this.canalGroup_id = 2; //2 es el grupo para prospecto de clientes;
       console.log("Busqueda sobre clientes activadas ... ");
       this.lsClient$ = this.description.pipe(
         //Espera 300 ms despues de cada tecleo
@@ -143,8 +134,7 @@ export class PersonComponent implements OnInit {
         console.log("Cliente temporal");
         console.log(clientTmp);
         this.oSelectedCity = clientTmp.city;
-        this.oSelectedEconomicActivity = clientTmp.economicActivity;
-        this.oCanalSelected = clientTmp.canal;
+        this.oSelectedEconomicActivity = clientTmp.economicActivity;        
         this.setDataClientToForm(clientTmp);
       }
     } else if (this.kindOfForm == "PreClient") {
@@ -262,9 +252,7 @@ export class PersonComponent implements OnInit {
     this.oSelectedCity = pClient.city;
     this.cityService.setSelectedCity(pClient.city);
     this.oEconomicActSelected = pClient.economicActivity;
-    this.economicActivityService.setEconomicActivity(pClient.economicActivity);
-    this.oCanalSelected = pClient.canal;
-    this.canalService.setSelectedCanal(pClient.canal);
+    this.economicActivityService.setEconomicActivity(pClient.economicActivity);   
     this.ClientSetted.emit(pClient);
 
 
@@ -344,10 +332,10 @@ export class PersonComponent implements OnInit {
 
       if (this.kindOfForm == "client") {
         let oEconomicActivity = this.economicActivityService.getEconomicActivity();
-        let oCanal = this.canalService.getSelectedCanal();
+        
 
         let oClient = new Client();
-        oClient.setClient(this.objPerson, oEconomicActivity, oCanal);
+        oClient.setClient(this.objPerson, oEconomicActivity);
         console.warn("[Lista de contactors]");
         console.log(oClient.lsContacts);
         this.clientService.setClientTmp(oClient);
@@ -377,9 +365,6 @@ export class PersonComponent implements OnInit {
             isModified = true;
           } else if (this.oClientDB.economicActivity.id != oClient.economicActivity.id) {
             console.log("La actividad económica del cliente ha sido modificado");
-            isModified = true;
-          } else if (this.oClientDB.canal.id != oClient.canal.id) {
-            console.log("El canal del cliente ha sido modificado");
             isModified = true;
           } else if (this.oClientDB.lsContacts == null) {
             console.log("verificar actualización de contactos");

@@ -70,7 +70,7 @@ export class ContactComponent implements OnInit {
     console.log(jobTitleVerified);
     this.owner = this.personService.getPerson();
     var client = new Client();
-    client.setClient(this.owner, null, null);
+    client.setClient(this.owner, null);
 
     console.log(this.owner);
     var contact = new Contact();

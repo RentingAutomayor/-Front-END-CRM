@@ -168,18 +168,24 @@ export class TblRequestsComponent implements OnInit {
     this.RequestToDelete = pRequest;
   }
 
-  markRequestToEdit(pRequest: RequestRenting) {
-    this.RequestToEdit = pRequest;
+  async markRequestToEdit(pRequest_id: any) {
+    this.isAwaiting = true;
+    let RequestDB = await this.requestService.GetRequestById(pRequest_id);
+    this.isAwaiting = false;
+    this.RequestToEdit = RequestDB;
+    
   }
 
   setRequestToEdit() {
     this.requestService.setRequestToEdit(this.RequestToEdit);
   }
 
-  viewRequestReview(pRequest: RequestRenting) {
-    this.requestService.setRequestToView(pRequest);
+  async viewRequestReview(pRequest_id: any) {
+    this.isAwaiting = true;
+    let request_bd = await this.requestService.GetRequestById(pRequest_id);
+    this.requestService.setRequestToView(request_bd);
+    this.isAwaiting = false;
     this.router.navigate(["/RequestReview"]);
-
   }
 
   setKindOfFilter() {
@@ -231,6 +237,7 @@ export class TblRequestsComponent implements OnInit {
     this.frmFilter.controls.txtValue.setValue('');
     this.frmFilter.controls.txtRegistrationDate.setValue('');
     this.isFiltred = false;
+    this.p = 1;
     
   }
 

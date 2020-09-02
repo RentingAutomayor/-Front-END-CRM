@@ -93,13 +93,7 @@
                     <div class="col-12">
                         <app-economic-activity [EconomicActSelected]="oEconomicActSelected"></app-economic-activity>
                     </div>
-                </div>
-                <div class="form-row mb-4" *ngIf="isClientForm">
-                    <div class="col-12">
-                        <app-canal [canalSelected]="oCanalSelected" [CanalGroup]="canalGroup_id"></app-canal>
-                    </div>
-                </div>
-
+                </div>               
                 <div class="form-row mb-4" *ngIf="frmHasErrors">
                     <div class="col-12">
                         <p class="text-danger"><b>{{ validationForm.message }}</b></p>

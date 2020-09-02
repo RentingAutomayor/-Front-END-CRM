@@ -48,7 +48,7 @@ export class NavigationComponent implements OnInit {
     if (idElement == "nav-logout") {
       this.logout();
     }
-    this.navigationService.SetNavigationElement(idElement);
+    this.navigationService.SetNavigationElement(idElement);    
     this.navigate(idElement);    
   }
 

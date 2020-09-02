@@ -4,11 +4,10 @@ import { Canal } from './canal';
 import { Contact } from './contact';
 
 export class Client extends Person{
-    economicActivity:EconomicActivity;
-    canal:Canal;
+    economicActivity:EconomicActivity;    
     lsContacts:Contact[];
 
-    setClient(paramPerson:Person,paramEconAct:EconomicActivity,paramCanal:Canal){
+    setClient(paramPerson:Person,paramEconAct:EconomicActivity){
         this.id = paramPerson.id;
         this.kindOfDocument = paramPerson.kindOfDocument;
         this.name = paramPerson.name;
@@ -17,9 +16,10 @@ export class Client extends Person{
         this.phone = paramPerson.phone;
         this.email = paramPerson.email;
         this.city = paramPerson.city;
-        this.economicActivity = paramEconAct;
-        this.canal = paramCanal;
+        this.economicActivity = paramEconAct;      
     }
+
+    
 
     
 }

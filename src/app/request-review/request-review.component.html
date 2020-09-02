@@ -13,7 +13,7 @@
             <div class="form-row mb-4">
                 <div class="col-6">
                     <label for="#">Canal</label>
-                    <input class="form form-control" type="text" disabled [value]="request.client.canal.description">
+                    <input class="form form-control" type="text" disabled [value]="request.canal.description">
                 </div>
                 <div class="col-6">
                     <label for="#">Probabilidad</label>
@@ -30,6 +30,12 @@
                     <input class="form form-control" type="text" disabled [value]="request.childState.description">
                 </div>
             </div>  
+            <div class="form-row mb-4">
+                <div class="col-12">
+                    <label for="#">Observaciones:</label>
+                   <textarea class="form form-control" rows="4" disabled>{{request.observation}}</textarea>
+                </div>               
+            </div>  
             <br>
             <hr>
             <br>
@@ -40,7 +46,13 @@
                     <input class="form form-control" type="text" disabled [value]="request.client.kindOfDocument.description">
                 </div>
                 <div class="col-6">
-                    <label for="#">Cliente:</label>
+                    <label for="#">Número de documento:</label>
+                    <input class="form form-control" type="text" disabled [value]="request.client.id">
+                </div>
+            </div>    
+            <div class="form-row mb-4">                
+                <div class="col-12">
+                    <label for="#">Nombre:</label>
                     <input class="form form-control" type="text" disabled [value]="request.client.name + ' ' + validateLastName(request.client.lastName)">
                 </div>
             </div>    
@@ -94,7 +106,7 @@
             </div>   
             <br>                               
             <div class="container-btnActions">
-                <input type="button" class="btn btn-info btn-action" value="Volver" routerLink="/MasterRequests" />
+                <input type="button" class="btn btn-info btn-action" value="Volver" (click)="BackToMaster()" />
             </div>
             <!-- </form> -->
         </div>
