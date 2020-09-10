@@ -1,0 +1,18 @@
+<hr>
+<h4>Observaciones</h4>
+<table class="table table-striped">
+    <thead>
+        <th>#</th>
+        <th>Observación</th>
+        <th>Usuario</th>
+        <th>Fecha de registro</th>
+    </thead>
+    <tBody>
+        <tr *ngFor="let observation of lsObservation; index as i">
+            <td>{{ i + 1 }}</td>
+            <td>{{ observation.observation }}</td>
+            <td>{{ observation.user.name +' '+ observation.user.lastName | titlecase }}</td>
+            <td>{{ observation.registrationDate | date:'yyyy/MM/dd hh:mm:ss' }}</td>
+        </tr>
+    </tBody>
+</table>

@@ -24,7 +24,7 @@
         <app-person [kindOfForm]="kindOfForm" (frmPersonIsFinished)="ShowFrmRequest()"></app-person>
     </div>
     <div class="card-body" *ngIf="frmRequestIsActive">
-        <app-request-pre-client (frmPersonCombeBack)="ShowFrmPerson()"  [isFrmToUpdate]="true"></app-request-pre-client>
+        <app-request-pre-client (frmPersonCombeBack)="ShowFrmPerson()"  [isFrmToUpdate]="true"></app-request-pre-client>        
     </div>
 </div>
 

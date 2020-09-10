@@ -1,0 +1,98 @@
+<app-navigation></app-navigation>
+<div class="container">
+    <div class="card">
+        <div class="card-body">
+            <form [formGroup]="formPerson">
+                <legend>Datos de la solicitud</legend>
+                <br>
+                <div class="form-row mb-4">
+                    <div class="col-6">
+                        <label>Número de solicitud:</label>
+                        <input type="text" class="form-control" formControlName="txtIdPreRequest" placeholder="Número de solicitud" disabled>
+                    </div>
+                    <div class="col-6">
+                        <label>Fecha de registro</label>
+                        <input type="text" class="form-control" formControlName="txtRegistrationDate" placeholder="Fecha de registro" disabled>
+                    </div>
+                </div>
+                <div class="form-row mb-4">
+                    <div class="col-6">
+                        <label>Canal primario:</label>
+                        <input type="text" class="form-control" formControlName="txtFirstCanal" placeholder="Canal primario" disabled>
+                    </div>
+                    <div class="col-6">
+                        <label>Canal secundario</label>
+                        <input type="text" class="form-control" formControlName="txtSecondCanal" placeholder="Canal secundario" disabled>
+                    </div>
+                </div>
+                <div class="form-row mb-4">
+                    <div class="col-6">
+                        <label>Vehículo de interes:</label>
+                        <input type="text" class="form-control" formControlName="txtVehicleModel" placeholder="Vehículo de interes" disabled>
+                    </div>
+                    <div class="col-6">
+                        <label>Estado de la solicitud</label>
+                        <input type="text" class="form-control" formControlName="txtStateRequest" placeholder="Estado de la solicitud" disabled>
+                    </div>
+                </div>
+               
+                <hr>                
+                <app-tbl-pre-request-observation [lsObservation]="preRequest.lsObservation"></app-tbl-pre-request-observation>
+                <hr>
+               
+                <legend>Información del cliente</legend>
+                <br>
+                <div class="form-row mb-4">
+                    <div class="col-6">
+                        <label>Tipo de documento:</label>
+                        <input type="text" class="form-control" formControlName="txtKindOfDocument" placeholder="Sin tipo de documento" disabled> 
+                    </div>
+                    <div class="col-6">
+                        <label>Número de documento</label>
+                        <input type="text" class="form-control" formControlName="txtDocument" placeholder="Sin documento" disabled>
+                    </div>
+                </div>
+                <div class="form-row mb-4">
+                    <div class="col-6">
+                        <label>Nombres:</label>
+                        <input type="text" class="form-control" formControlName="txtName" placeholder="Sin nombres" disabled>
+                    </div>
+                    <div class="col-6">
+                        <label>Apellidos:</label>
+                        <input type="text" class="form-control" formControlName="txtLastName" placeholder="Sin apellidos" disabled>
+                    </div>
+                </div>
+                <div class="form-row mb-4">
+                    <div class="col-6">
+                        <label>Celular:</label>
+                        <input type="text" class="form-control" formControlName="txtCellphone" placeholder="Sin celular" disabled>
+                    </div>
+                    <div class="col-6">
+                        <label>Teléfono:</label>
+                        <input type="text" class="form-control" formControlName="txtPhone" placeholder="Sin teléfono" disabled>
+                    </div>
+                </div>
+                <div class="form-row mb-4">
+                    <div class="col-12">
+                        <label>Email:</label>
+                        <input type="text" class="form-control" formControlName="txtEmail" placeholder="Sin email" disabled>
+                    </div>                   
+                </div>
+                <div class="form-row mb-4">
+                    <div class="col-6">
+                        <label>Departamento:</label>
+                        <input type="text" class="form-control" formControlName="txtDepartment" placeholder="Sin departamento" disabled>
+                    </div>
+                    <div class="col-6">
+                        <label>Ciudad:</label>
+                        <input type="text" class="form-control"  formControlName="txtCity" placeholder="Sin ciudad" disabled>
+                    </div>
+                </div>
+            </form>
+            <br>
+            <div class="container-btnActions">
+                <input type="button" class="btn btn-info btn-action" value="Volver" (click)="BackToMaster()" />
+            </div>
+        </div>
+    </div>
+</div>

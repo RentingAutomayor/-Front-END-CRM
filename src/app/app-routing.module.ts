@@ -11,6 +11,7 @@ import { UpdateRequestComponent } from './update-request/update-request.componen
 import { AddPreClientComponent } from './add-pre-client/add-pre-client.component';
 import { TblPreClientsComponent } from './tbl-pre-clients/tbl-pre-clients.component';
 import { UpdatePreRequestComponent } from './update-pre-request/update-pre-request.component';
+import { PreRequestReviewComponent } from './pre-request-review/pre-request-review.component';
 
 const routes: Routes = [
   { path: 'MasterRequests', component: TblRequestsComponent },
@@ -23,6 +24,7 @@ const routes: Routes = [
   { path: 'NewPreClientRequest', component:AddPreClientComponent},
   { path: 'MasterPreClients', component:TblPreClientsComponent},
   { path: 'UpdatePreRequest', component:UpdatePreRequestComponent},
+  { path: 'PreRequestReview' , component:PreRequestReviewComponent},
   { path: '',   redirectTo: '/Login', pathMatch: 'full' }
 ]
 

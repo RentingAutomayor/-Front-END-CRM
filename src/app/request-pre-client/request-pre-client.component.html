@@ -1,44 +1,61 @@
-<div class="card">
-    <div class="card-body">
-        <br>
-        <h3>Datos de la solicitud</h3>
-        <hr>
-        <br>
-        <div class="form-row mb-4">
-            
-            <div class="col-6">
-                <label for="">Primer&nbsp;</label>
-                <app-canal [CanalGroup]="CanalGroupPrincipal" [canalSelected]="oCanalSelected"></app-canal>
-            </div>
-            <div class="col-6">
-                <label for="">Segundo&nbsp;</label>
-                <app-canal [CanalGroup]="CanalGroupNaturalPerson" [canalSelected]="oCanalSocialNetwork"></app-canal>
-            </div>          
-        </div>
-        <div class="form-row mb-4">
-            <div class="col-6">
-                <app-state-of-request [GroupOfStates]="stateGroup" [stateSelected]="oStateSelected">
-                </app-state-of-request>
-            </div>
-            <div class="col-6">
-                <app-vehicle-model [vehicleModelSelected]="oVehicleModelSelected"></app-vehicle-model>
-            </div>
-        </div>
+<form [formGroup]="frmPreRequest">
 
-        <button type="button" class="btn btn-outline-primary waves-effect btn-save-client" (click)="ComeBackPerson()"><i
-                class="fas fa-angle-double-left"></i> Atrás</button>
-    </div>
-    <div class="form-row mb-4">
-        <div class="col-12">
-            <button type="button" class="btn btn-success waves-effect btn-save-client btn-action"
-            (click)="SavePreClientRequest()">Guardar</button>
+    <div class="card">
+        <div class="card-body">
+            <br>
+            <h3>Datos de la solicitud</h3>
+            <hr>
+            <br>
+            <div class="form-row mb-4">
+
+                <div class="col-6">
+                    <label for="">Primer&nbsp;</label>
+                    <app-canal [CanalGroup]="CanalGroupPrincipal" [canalSelected]="oCanalSelected"></app-canal>
+                </div>
+                <div class="col-6">
+                    <label for="">Segundo&nbsp;</label>
+                    <app-canal [CanalGroup]="CanalGroupNaturalPerson" [canalSelected]="oCanalSocialNetwork"></app-canal>
+                </div>
+            </div>
+            <div class="form-row mb-4">
+                <div class="col-6">
+                    <app-state-of-request [GroupOfStates]="stateGroup" [stateSelected]="oStateSelected">
+                    </app-state-of-request>
+                </div>
+                <div class="col-6">
+                    <app-vehicle-model [vehicleModelSelected]="oVehicleModelSelected"></app-vehicle-model>
+                </div>
+            </div>
+
+            <div class="form-row mb-4">
+                <div class="col-12">
+                    <label>Observaciones:</label>
+                    <textarea formControlName="txtObservation" class="form-control" cols="30"></textarea>
+
+                </div>
+            </div> 
             
-            <button type="button" class="btn btn-danger waves-effect btn-cancel btn-action"
-                (click)="ComeBactToTable()">Cancelar</button>      
-           
+            <div class="form-row mb-4" *ngIf="isFrmToUpdate">
+                <div class="col-12">
+                    <app-tbl-pre-request-observation [lsObservation]="listObservation"></app-tbl-pre-request-observation>
+                </div>
+            </div>           
+            <button type="button" class="btn btn-outline-primary waves-effect btn-save-client"
+                (click)="ComeBackPerson()"><i class="fas fa-angle-double-left"></i> Atrás</button>
+        </div>
+        <div class="form-row mb-4">
+            <div class="col-12">
+
+                <button type="button" class="btn btn-success waves-effect btn-save-client btn-action"
+                    (click)="SavePreClientRequest()">Guardar</button>
+
+                <button type="button" class="btn btn-danger waves-effect btn-cancel btn-action"
+                    (click)="ComeBactToTable()">Cancelar</button>
+
+            </div>
         </div>
     </div>
-</div>
+</form>
 
 <div *ngIf="isAwaiting" class="container-img-loading">
     <div class="divBack">

@@ -50,11 +50,11 @@ export class PersonComponent implements OnInit {
   formPersonWasFinished: boolean;
   @Input() kindOfForm: string;
   isLsClient: boolean;
-  private isLsPreClient:boolean;
+  private isLsPreClient: boolean;
   private isTxtDocumentActive: boolean;
   private isTxtNameActive: boolean;
-  private isTxtCellphoneActive:boolean;
-  private isTxtEmailActive:boolean;
+  private isTxtCellphoneActive: boolean;
+  private isTxtEmailActive: boolean;
   lsClient$: Observable<Client[]>;
   lsPreClient$: Observable<PreClient[]>;
   oSelectedCity: City;
@@ -66,7 +66,7 @@ export class PersonComponent implements OnInit {
   isClientForm: boolean;
   clientExists: boolean;
   oEconomicActSelected: EconomicActivity;
-  
+
   @Input() frmClientBack: boolean;
   validationForm: ResponseApi;
   frmHasErrors: boolean;
@@ -114,7 +114,7 @@ export class PersonComponent implements OnInit {
     this.isTxtEmailActive = false;
 
     //Canal de los clientes
-    
+
     if (this.kindOfForm == "client") {
       this.isLsClient = true;
       this.isClientForm = true;
@@ -134,7 +134,7 @@ export class PersonComponent implements OnInit {
         console.log("Cliente temporal");
         console.log(clientTmp);
         this.oSelectedCity = clientTmp.city;
-        this.oSelectedEconomicActivity = clientTmp.economicActivity;        
+        this.oSelectedEconomicActivity = clientTmp.economicActivity;
         this.setDataClientToForm(clientTmp);
       }
     } else if (this.kindOfForm == "PreClient") {
@@ -148,9 +148,9 @@ export class PersonComponent implements OnInit {
         //cambia a una busqueda de tipo Observable       
         switchMap((desc: string) => this.preClientService.GetPreClientsByDescriptions(desc)),
       );
-      if(PersonTmp != null){
+      if (PersonTmp != null) {
         this.SetDataPersonToForm(PersonTmp);
-      }      
+      }
     }
   }
 
@@ -175,28 +175,28 @@ export class PersonComponent implements OnInit {
   searchPerson(desc: string) {
     let aDesc = desc.split('|');
 
-    switch(aDesc[0]){
+    switch (aDesc[0]) {
       case 'id':
-          this.isTxtDocumentActive = true;
-          this.isTxtNameActive = false;
+        this.isTxtDocumentActive = true;
+        this.isTxtNameActive = false;
         break;
-        case 'name':
-          this.isTxtDocumentActive = false;
-          this.isTxtNameActive = true;
-          break;
-        case 'cellphone':
-          this.isTxtCellphoneActive = true;
-          this.isTxtEmailActive = false;
-          break;
-        case 'email':
-          this.isTxtEmailActive = true;
-          this.isTxtCellphoneActive = false;          
-          break;
-    }   
+      case 'name':
+        this.isTxtDocumentActive = false;
+        this.isTxtNameActive = true;
+        break;
+      case 'cellphone':
+        this.isTxtCellphoneActive = true;
+        this.isTxtEmailActive = false;
+        break;
+      case 'email':
+        this.isTxtEmailActive = true;
+        this.isTxtCellphoneActive = false;
+        break;
+    }
     this.description.next(desc);
   }
 
-  SetDataPersonToForm(pPerson: Person) {    
+  SetDataPersonToForm(pPerson: Person) {
     this.isTxtCellphoneActive = false;
     this.isTxtEmailActive = false;
 
@@ -252,7 +252,7 @@ export class PersonComponent implements OnInit {
     this.oSelectedCity = pClient.city;
     this.cityService.setSelectedCity(pClient.city);
     this.oEconomicActSelected = pClient.economicActivity;
-    this.economicActivityService.setEconomicActivity(pClient.economicActivity);   
+    this.economicActivityService.setEconomicActivity(pClient.economicActivity);
     this.ClientSetted.emit(pClient);
 
 
@@ -272,57 +272,77 @@ export class PersonComponent implements OnInit {
     //console.warn(this.formPerson.value);
     let id = this.formPerson.controls.txtDocument.value;
 
+    let kindOfDoc = null;
     if (oKindOfDocument != undefined) {
-      let kindOfDoc = oKindOfDocument;
-      let name = this.formPerson.controls.txtName.value;
-
-      let lastName = "";
-      let cellPhone = "";
-      let phone ="";
-      let email = "";
-
-
-      if (oKindOfDocument.description.toUpperCase() != 'NIT') {
-        lastName = this.formPerson.controls.txtLastName.value;
-        cellPhone = this.formPerson.controls.txtCellPhone.value;
-        phone = this.formPerson.controls.txtPhone.value;
-        email = this.formPerson.controls.txtEmail.value;
-      }
-
-
-      console.log("[Cellphone] : "+ cellPhone);
-      console.log("[Phone] :  " + phone);
-
-      this.objPerson.id = id;
-      this.objPerson.kindOfDocument = kindOfDoc;
-      this.objPerson.name = name;
-      this.objPerson.lastName = lastName;
-      this.objPerson.cellPhone = cellPhone;
-      this.objPerson.phone = phone;
-      this.objPerson.email = email;
-      this.objPerson.city = objCity;
-
-      switch (this.kindOfForm) {
-        case 'client':
-          this.validateFormClient();
-          break;
-        case 'PreClient':
-          console.log("[Precliente a crear:]");
-          console.log(this.objPerson);
-          this.personService.setPerson(this.objPerson);
-          this.frmPersonIsFinished.emit(true);
-          break;
-        default:
-          console.log("No existe implementación valida");
-          break;
-      }
+      kindOfDoc = oKindOfDocument;
     } else {
-      alert("Debe seleccionar un tipo de documento");
+      kindOfDoc = new kindOfDocument();
+      kindOfDoc.id = 1;
     }
+
+    let name = this.formPerson.controls.txtName.value;
+
+    let lastName = "";
+    let cellPhone = "";
+    let phone = "";
+    let email = "";
+
+    lastName = this.formPerson.controls.txtLastName.value;
+    cellPhone = this.formPerson.controls.txtCellPhone.value;
+    phone = this.formPerson.controls.txtPhone.value;
+    email = this.formPerson.controls.txtEmail.value;
+
+
+    console.log("[Cellphone] : " + cellPhone);
+    console.log("[Phone] :  " + phone);
+
+    this.objPerson.id = id;
+    this.objPerson.kindOfDocument = kindOfDoc;
+    this.objPerson.name = name;
+   
+    if(lastName != null){
+      this.objPerson.lastName = lastName;
+    }else{
+      this.objPerson.lastName = "";
+    }
+
+    if(cellPhone != null){
+      this.objPerson.cellPhone = cellPhone.toString().trim();
+    }else{
+      this.objPerson.cellPhone = "";
+    }
+    
+    if(phone != null){
+      this.objPerson.phone = phone;
+    }else{
+      this.objPerson.phone = "";
+    }
+    
+    if(email != null){
+      this.objPerson.email = email.toString().trim();
+    }else{
+      this.objPerson.email = "";
+    }
+    
+    this.objPerson.city = objCity;
+
+    switch (this.kindOfForm) {
+      case 'client':
+        this.validateFormClient();
+        break;
+      case 'PreClient':       
+       this.validateFormPreClient();
+        break;
+      default:
+        console.log("No existe implementación valida");
+        break;
+    }
+   
   }
 
   private validateFormClient() {
-    this.validationForm = this.personService.validateFormPerson(this.objPerson);
+
+    this.validationForm = this.personService.validateFormPerson(this.objPerson, this.kindOfForm);
 
     if (this.validationForm.response) {
       this.personService.setPerson(this.objPerson);
@@ -332,7 +352,7 @@ export class PersonComponent implements OnInit {
 
       if (this.kindOfForm == "client") {
         let oEconomicActivity = this.economicActivityService.getEconomicActivity();
-        
+
 
         let oClient = new Client();
         oClient.setClient(this.objPerson, oEconomicActivity);
@@ -387,13 +407,26 @@ export class PersonComponent implements OnInit {
     }
   }
 
-  SetPreClientBdTmp(pPreclient:PreClient){
+  private validateFormPreClient(){
+    this.validationForm = this.personService.validateFormPerson(this.objPerson, this.kindOfForm);
+    if(this.validationForm.response){
+      console.log("[Precliente a crear:]");
+      console.log(this.objPerson);
+      this.personService.setPerson(this.objPerson);
+      this.frmPersonIsFinished.emit(true);
+    }else{
+      alert(this.validationForm.message);
+    }
+    
+  }
+
+  SetPreClientBdTmp(pPreclient: PreClient) {
     this.preClientService.SetPreClientBD(pPreclient);
     console.warn("PreCliente a Cambiar Form Person");
     console.log(pPreclient);
   }
 
-  pasteEvent(event: ClipboardEvent,control:string){
+  pasteEvent(event: ClipboardEvent, control: string) {
 
     // console.log("["+control+"] : " + event.clipboardData.getData('text'));
 
@@ -408,11 +441,11 @@ export class PersonComponent implements OnInit {
     // }
   }
 
-  setValueSetted(event){
-   // this.formPerson.controls.txtCellPhone.setValue(event.target.value);
+  setValueSetted(event) {
+    // this.formPerson.controls.txtCellPhone.setValue(event.target.value);
   }
 
- 
+
 
   ngOnChanges(changes: { [propKey: string]: SimpleChange }) {
     console.warn(changes);

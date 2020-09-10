@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { PreRequestServiceService } from '../Services/pre-request-service.service';
 import { PreRequest } from '../Models/PreRequest';
 import { NgxPaginationModule } from 'ngx-pagination';
-import { Router } from '@angular/router';
+import { Router, Navigation } from '@angular/router';
 
 import { PersonService } from '../Services/person.service';
 import { Canal } from '../Models/canal';
@@ -12,6 +12,7 @@ import { VehicleModelService } from '../Services/vehicle-model.service';
 import { RequestService } from '../Services/request.service';
 import { State } from '../Models/state';
 import { FormGroup, FormControl } from '@angular/forms';
+import { NavigationService } from '../Services/navigation.service';
 
 @Component({
   selector: 'app-tbl-pre-clients',
@@ -38,6 +39,7 @@ export class TblPreClientsComponent implements OnInit {
   private filterStateRequestIsVisible: boolean;
   private filterFirstCanalIsVisible: boolean;
   private filterSecondCanalIsVisible: boolean;
+  private filterRegistrationDateIsVisible: boolean;
   private isFiltred:boolean;
 
 
@@ -48,7 +50,8 @@ export class TblPreClientsComponent implements OnInit {
     private personService: PersonService,
     private canalService: CanalService,
     private vehicleModelService: VehicleModelService,
-    private requestService: RequestService
+    private requestService: RequestService,
+    private navigationService:NavigationService
   ) {
     this.isAwaiting = false;
 
@@ -58,7 +61,8 @@ export class TblPreClientsComponent implements OnInit {
       cmbVehicleModel: new FormControl('Seleccione...'),
       cmbStateRequest: new FormControl('Seleccione...'),
       cmbFirstCanal: new FormControl('Seleccione...'),
-      cmbSecondCanal: new FormControl('Seleccione...')
+      cmbSecondCanal: new FormControl('Seleccione...'),
+      txtRegistrationDate: new FormControl('')
     });
   }
 
@@ -87,13 +91,19 @@ export class TblPreClientsComponent implements OnInit {
     this.filterStateRequestIsVisible = false;
     this.filterFirstCanalIsVisible = false;
     this.filterSecondCanalIsVisible = false;
+    this.filterRegistrationDateIsVisible = false;
     this.isFiltred = false;
   }
 
-  markPreRequestToEdit(pPreRequest: PreRequest) {
+  async markPreRequestToEdit(pPreRequest_Id: any) {
     this.ClearDataInMemory();
-    this.preRequestService.SetPreRequestToUpdate(pPreRequest);
+    this.isAwaiting = true;
+    let PreRequestBD = await this.preRequestService.GetPreRequestByID(pPreRequest_Id);
+    this.isAwaiting = false;
+    this.preRequestService.SetPreRequestToUpdate(PreRequestBD);
+    this.navigationService.SetNavigationElement('nav-pre-clients');
     this.router.navigate(['/UpdatePreRequest']);
+
   }
 
   NewPreRequest() {
@@ -113,8 +123,8 @@ export class TblPreClientsComponent implements OnInit {
     if (confirm('¿Está seguro que desea eliminar esta solicitud?')) {
       var rta = await this.preRequestService.DeletePreRequestById(idPreRequest.toString());
       if (rta.response) {
-        alert(rta.message);
-        this.ngOnInit();
+        //alert(rta.message);
+        this.lsPreRequest = await this.preRequestService.GetAllPreRequest();
       }
     }
   }
@@ -150,6 +160,9 @@ export class TblPreClientsComponent implements OnInit {
       case 'secondCanal':
         this.filterSecondCanalIsVisible = true;
         break;
+      case 'registrationDate':
+        this.filterRegistrationDateIsVisible = true;
+        break;
     }
   }
 
@@ -160,51 +173,45 @@ export class TblPreClientsComponent implements OnInit {
     }
   }
 
-  filterRequests() {
+  async filterRequests() {
     this.isFiltred = true;
     let kindOfFilter = this.frmFilter.controls.cmbKindOfFilter.value;
-    console.log(kindOfFilter);    
+    console.log(kindOfFilter); 
+    let filteredValue ="";   
     switch (kindOfFilter) {
       case 'id':
-          let idPreRequest = this.frmFilter.controls.txtValue.value;
-          this.lsPreRequest = this.lsPreRequestTMP.filter(pr  => pr.id.toString().includes(idPreRequest));
+        filteredValue = this.frmFilter.controls.txtValue.value;          
         break;
       case 'client':
-          let dataClient = this.frmFilter.controls.txtValue.value;        
-
-          if(isNaN(dataClient)){
-            
-            this.lsPreRequest = this.lsPreRequestTMP.filter(
-              pr  => pr.preClient.name.toUpperCase().includes(dataClient.toUpperCase()) || pr.preClient.lastName.toUpperCase().includes(dataClient.toUpperCase()) || (pr.preClient.email !== null && pr.preClient.email.toUpperCase().includes(dataClient.toUpperCase()) ));
-          }else{
-            this.lsPreRequest = this.lsPreRequestTMP.filter(
-              pr  => (pr.preClient.cellPhone !== null && pr.preClient.cellPhone.includes(dataClient))
-            );
-          }
+          filteredValue= this.frmFilter.controls.txtValue.value;       
         break;
       case 'vehicleModel':
-        let idVehicleModel = this.frmFilter.controls.cmbVehicleModel.value;
-        this.lsPreRequest = this.lsPreRequestTMP.filter(pr => pr.vehicleModel.id == idVehicleModel);
+        filteredValue = this.frmFilter.controls.cmbVehicleModel.value;        
         break;
       case 'stateRequest':
-        let idStateRequest = this.frmFilter.controls.cmbStateRequest.value;
-        this.lsPreRequest = this.lsPreRequestTMP.filter(pr => pr.stateRequest.id == idStateRequest);
+        filteredValue = this.frmFilter.controls.cmbStateRequest.value;        
         break;
       case 'firstCanal':
-        let idFirstCanal = this.frmFilter.controls.cmbFirstCanal.value;
-        this.lsPreRequest = this.lsPreRequestTMP.filter(pr => pr.firstCanal.id == idFirstCanal);       
+        filteredValue = this.frmFilter.controls.cmbFirstCanal.value;        
         break;
       case 'secondCanal':
-        let idSecondCanal = this.frmFilter.controls.cmbSecondCanal.value;
-        this.lsPreRequest = this.lsPreRequestTMP.filter( pr => pr.secondCanal.id == idSecondCanal);
+        filteredValue = this.frmFilter.controls.cmbSecondCanal.value;        
+        break;
+      case 'registrationDate':
+        filteredValue = this.frmFilter.controls.txtRegistrationDate.value;
+        filteredValue = filteredValue.replace(/-/g,'/');
         break;
     }
-
+    this.isAwaiting = true;
+    this.lsPreRequest = await this.preRequestService.GetPreRequestByFilter(kindOfFilter,filteredValue);
+    this.isAwaiting = false;
   }
 
-  deleteFilter() {
+  async deleteFilter() {
     this.isFiltred = false;
-    this.lsPreRequest = this.lsPreRequestTMP;
+    this.isAwaiting = true;
+    this.lsPreRequest = await this.preRequestService.GetAllPreRequest();
+    this.isAwaiting = false;
     this.ClearFilterForms();
   }
 
@@ -219,5 +226,13 @@ export class TblPreClientsComponent implements OnInit {
     this.filterStateRequestIsVisible = false;
     this.filterFirstCanalIsVisible = false;
     this.filterSecondCanalIsVisible = false;
+    this.filterRegistrationDateIsVisible = false;
+  }
+
+  async ViewRequestReview(pPreRequest_id:number){
+    let PreRequestDB = await this.preRequestService.GetPreRequestByID(pPreRequest_id);
+    this.preRequestService.SetPreRequestToReview(PreRequestDB);
+    this.navigationService.SetNavigationElement('nav-pre-clients');
+    this.router.navigate(['/PreRequestReview']);
   }
 }

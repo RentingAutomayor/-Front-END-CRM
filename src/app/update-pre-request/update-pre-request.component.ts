@@ -54,6 +54,7 @@ export class UpdatePreRequestComponent implements OnInit {
     this.sRegistrationDate = "Fecha de registro";
     this.PreRequestToUpdate = null;
     this.PreRequestToUpdate = this.preRequestService.GetPreRequestToUpdate();
+    
 
 
     if (this.PreRequestToUpdate != null) {

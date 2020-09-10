@@ -15,6 +15,7 @@
                         <option [value]="'stateRequest'">Estado de la solicitud</option>
                         <option [value]="'firstCanal'">Canal primario</option>
                         <option [value]="'secondCanal'">Canal secundario</option>
+                        <option [value]="'registrationDate'">Fecha de registro</option>
                     </select>
                 </div>
                 <div class="col-4">
@@ -41,6 +42,8 @@
                         <option *ngFor="let secondCanal of oLsSecondCanal" [value]="secondCanal.id">{{secondCanal.description}}</option>
                     </select>
 
+
+                    <input type="date" formControlName="txtRegistrationDate" class="form-control" *ngIf="filterRegistrationDateIsVisible">
 
                 </div>
                 <div class="col-4">
@@ -76,13 +79,13 @@
                     <td>{{ preRequest.preClient.email }}</td>
                     <td>{{ preRequest.vehicleModel.name }}</td>
                     <td>{{ preRequest.stateRequest.description }}</td>
-                    <td>{{ GetCanalDescription(preRequest.secondCanal.id) }}</td>
+                    <td>{{ preRequest.secondCanal.description }}</td>
                     <td>{{ preRequest.registrationDate | date:'yyyy/MM/dd hh:mm:ss' }}</td>
                     <td>
                         <i class="fas fa-info-circle text-info btn-actions" title="Más información"
-                            (click)="viewRequestReview(request)"></i>
+                            (click)="ViewRequestReview(preRequest.id)"></i>
                         <i class="fas fa-edit text-warning btn-actions" title="Modificar"
-                            (click)="markPreRequestToEdit(preRequest)"></i>
+                            (click)="markPreRequestToEdit(preRequest.id)"></i>
                         <i class="fas fa-trash-alt text-danger btn-actions" (click)="DeletePreRequest(preRequest.id)"
                             title="Eliminar"></i>
 

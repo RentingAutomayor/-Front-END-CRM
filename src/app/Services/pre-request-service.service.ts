@@ -13,6 +13,7 @@ export class PreRequestServiceService {
 
   private url:string;
   private preRequestToUpdate:PreRequest;
+  private preRequestToReview:PreRequest;
   private  HttpOptions = {
     headers: new HttpHeaders({ 'Content-Type': 'application/json' })
   };
@@ -21,6 +22,14 @@ export class PreRequestServiceService {
     private http: HttpClient
   ) { 
     this.url = '/Formularios/api/PreRequest';
+  }
+  
+  SetPreRequestToReview(pPreRequest:PreRequest){
+    this.preRequestToReview = pPreRequest;
+  }
+
+  GetPreRequestToReview():PreRequest{
+    return this.preRequestToReview;
   }
 
   SetPreRequestToUpdate(pPreRequest:PreRequest){
@@ -44,6 +53,18 @@ export class PreRequestServiceService {
     let urlGet = this.url + '/Get';
     return this.http.get<PreRequest[]>(urlGet).toPromise();
   }
+
+  async GetPreRequestByFilter(kindOfFilter:string,value:string):Promise<PreRequest[]>{
+    let urlGetFilter = this.url + '/GetPreRequestByFilter?pKindOfFilter='+kindOfFilter+'&pValue='+value;
+    return this.http.get<PreRequest[]>(urlGetFilter).toPromise();
+  }
+
+  async GetPreRequestByID(pPreRequest_Id:number):Promise<PreRequest>{
+    let urlGetById = this.url + '/GetPreRequestById?pPreRequest_Id='+pPreRequest_Id;
+    return this.http.get<PreRequest>(urlGetById).toPromise();
+  }
+
+
 
   async DeletePreRequestById(idPreRequest:string):Promise<ResponseApi>{
     let urlDelete = this.url + '/DeleteRequestByID';

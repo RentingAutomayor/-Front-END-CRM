@@ -12,6 +12,8 @@ import { UserService } from '../Services/user.service';
 import { PreRequestServiceService } from '../Services/pre-request-service.service';
 import { Router, Route } from '@angular/router';
 import { PreclientServiceService } from '../Services/preclient-service.service';
+import { FormGroup, FormControl } from '@angular/forms';
+import { PreRequestObservation } from '../Models/PreRequestObservation';
 
 @Component({
   selector: 'app-request-pre-client',
@@ -30,6 +32,9 @@ export class RequestPreClientComponent implements OnInit {
   private oPreRequest: PreRequest;
   private isAwaiting: boolean;
   @Input() isFrmToUpdate: boolean;
+  private frmPreRequest: FormGroup;
+  private listObservation: PreRequestObservation[];
+  private Observation:PreRequestObservation;
 
 
   constructor(
@@ -46,6 +51,9 @@ export class RequestPreClientComponent implements OnInit {
     this.CanalGroupNaturalPerson = 1; // Grupos de pre cliente
     this.CanalGroupPrincipal = 2; // Grupo de principal
     this.stateGroup = "PRE-CLIENTES";
+    this.frmPreRequest = new FormGroup({
+      txtObservation: new FormControl('')
+    });
   }
 
   ngOnInit() {
@@ -58,6 +66,15 @@ export class RequestPreClientComponent implements OnInit {
     this.oVehicleModelSelected = this.vehicleModelService.GetVehicleModelSelected();
     this.oStateSelected = this.requestService.GetStateSelected();
     this.isAwaiting = false;
+   
+    let preRequest = this.preRequestService.GetPreRequestToUpdate();
+    if(preRequest != null){
+      if(preRequest.lsObservation != null){
+        this.listObservation = preRequest.lsObservation;
+      }
+    }   
+    this.Observation = new PreRequestObservation();
+    this.Observation.observation = this.frmPreRequest.controls.txtObservation.value;
   }
 
   ComeBackPerson() {
@@ -89,6 +106,11 @@ export class RequestPreClientComponent implements OnInit {
     let vehicleModel = new VehicleModel();
     vehicleModel = this.oVehicleModelSelected;
 
+    let lsObservation = [];
+    if(this.Observation.observation != null){      
+      lsObservation.push(this.Observation);
+    }
+
     let objPreRequest = new PreRequest();
     objPreRequest.preClient = oPreClient;
     objPreRequest.stateRequest = StateRequest;
@@ -96,6 +118,7 @@ export class RequestPreClientComponent implements OnInit {
     objPreRequest.firstCanal = firstCanal;
     objPreRequest.secondCanal = secondCanal;
     objPreRequest.user = this.userService.getUserAuth();
+    objPreRequest.lsObservation = lsObservation;    
 
     console.warn("Pre - Request a crear:");
     console.log(objPreRequest);

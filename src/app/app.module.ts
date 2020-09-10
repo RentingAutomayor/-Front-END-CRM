@@ -45,6 +45,8 @@ import { VehicleModelComponent } from './vehicle-model/vehicle-model.component';
 import { UpdatePreRequestComponent } from './update-pre-request/update-pre-request.component'; // <-- import the module
 
 import {DatePipe} from '@angular/common';
+import { TblPreRequestObservationComponent } from './tbl-pre-request-observation/tbl-pre-request-observation.component';
+import { PreRequestReviewComponent } from './pre-request-review/pre-request-review.component';
 
 
 
@@ -77,7 +79,9 @@ import {DatePipe} from '@angular/common';
     RequestPreClientComponent,
     StateOfRequestComponent,
     VehicleModelComponent,
-    UpdatePreRequestComponent
+    UpdatePreRequestComponent,
+    TblPreRequestObservationComponent,
+    PreRequestReviewComponent
   ],
   imports: [
     BrowserModule,

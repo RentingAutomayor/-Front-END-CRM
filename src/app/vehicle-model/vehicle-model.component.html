@@ -1,6 +1,7 @@
 
 <label for="#">Linea de vehiculo solicitado:</label>
-<select class="browser-default custom-select" [formControl]="cmbVehicleModel" (change)="setVehicleModel($event.target.value)">
-    <option disabled [value]="0">Seleccione...</option>
-    <option *ngFor="let model of lsVehicleModel" [value]="model.id">{{model.name}}</option>
-</select>
+<input type="text" class="form-control" [formControl]="txtVehicleModel" #vehicleModel (input)="GetVehicleModelByDescription(vehicleModel.value)" (focusout)="ValidateVehicleModelSelected()" [value]="vehicleModelSelected.name" placeholder="Línea de vehículo">
+<ul *ngIf="lsVehicleModelIsVisible">
+    <!-- El signo $ indica que el array de objetos que requiere el ngFor es un observable -->
+    <li *ngFor="let vehicleModel of lsVehicleModel$ | async" (click)="SetVehicleModel(vehicleModel)">{{ vehicleModel.name }}</li>
+</ul>
