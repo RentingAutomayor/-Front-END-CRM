@@ -10,6 +10,7 @@ import { catchError, map, tap } from 'rxjs/operators';
 import { RequestRenting } from '../Models/RequestRenting';
 import { ResponseApi } from '../Models/responseApi';
 import { RequestRiskComponent } from '../request-risk/request-risk.component';
+import { DataStructureRequest } from '../Models/DataStructureRequest';
 
 @Injectable({
   providedIn: 'root'
@@ -75,6 +76,11 @@ export class RequestService {
     let urlGenerateFile= this.urlApi + '/generateArchive';
     return this.http.post<ResponseApi>(urlGenerateFile,'',this.HttpOptions).toPromise();
   
+  }
+
+  async GetDataToExportFile():Promise<DataStructureRequest[]>{
+    let urlGetDataToFile= this.urlApi + '/GetDataToExportFile';
+    return this.http.get<DataStructureRequest[]>(urlGetDataToFile).toPromise();
   }
 
   async getStatesByParent(parentState_id: number): Promise<State[]> {

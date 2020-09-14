@@ -10,6 +10,8 @@ import { Probability } from '../Models/probability';
 import { State } from '../Models/state';
 import { ResponseApi } from '../Models/responseApi';
 import {NgxPaginationModule} from 'ngx-pagination';
+import { DataStructureRequest } from '../Models/DataStructureRequest';
+import { SharedFunctions } from '../Models/SharedFunctions';
 
 @Component({
   selector: 'app-tbl-requests',
@@ -54,6 +56,8 @@ export class TblRequestsComponent implements OnInit {
   //pagination
   p:number = 1;
 
+
+
   constructor(
     private requestService: RequestService,
     private userService: UserService,
@@ -97,6 +101,8 @@ export class TblRequestsComponent implements OnInit {
     this.userService.getUsersByArea("COMERCIAL").subscribe(lsu => this.oLsUsers = lsu);
     this.oLsParentStates = await this.requestService.getParentStates("TODOS");
     this.oLsChildState = await this.requestService.getStatesByParent(0);
+
+    
     
 
     console.log(this.userAuth);
@@ -271,19 +277,23 @@ export class TblRequestsComponent implements OnInit {
   }
 
   async generateFile() {
-    let rta = new ResponseApi();
-    rta = await this.requestService.generateFile();
-    if (rta.response) {
-      let msg = rta.message.split(";");
-      alert(msg[0]);
-      let pathFile = msg[1].replace("file:","");
-      console.log(pathFile);
-
-      var reader  = new FileReader();
-      var file = pathFile;     
-
-      //window.open(pathFile,"_blank");
-    }
+    var containerProgressBar = document.getElementById("container-progress-bar");
+    containerProgressBar.setAttribute("style","opacity:1");
+    var progressbar = document.getElementsByClassName("progress-bar");
+    progressbar[0].setAttribute("style","width:25%");    
+    let lsDataToExport = await this.requestService.GetDataToExportFile();
+    progressbar[0].setAttribute("style","width:50%");
+    let data = DataStructureRequest.MapDataToExport(lsDataToExport);
+    let contentCSV = SharedFunctions.prepareDataToCSV(data);
+    progressbar[0].setAttribute("style","width:75%");
+    SharedFunctions.downloadCSVFile(contentCSV,'Archivo_AV_Villas');
+    progressbar[0].setAttribute("style","width:100%");
+    setTimeout(function(){
+      var cont = document.getElementById("container-progress-bar");
+      cont.setAttribute("style","opacity:0");
+      cont.setAttribute("style","width:0%");
+    },2000);   
+   
   }
 
   validateLastName(lastname:string):string{

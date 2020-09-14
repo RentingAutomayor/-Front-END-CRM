@@ -23,5 +23,4 @@ export class RequestRenting{
     operationalInformation:OperationalInformation;
     canal: Canal;
     observation:string;
-
 }

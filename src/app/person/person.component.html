@@ -16,8 +16,7 @@
                     </div>
                     <div class="col-6">
                         <label for="">Documento:</label>
-                        <input type="number" class="form-control" placeholder="Documento ..."
-                            formControlName="txtDocument" #txtDocument (input)="searchPerson('id|'+txtDocument.value)">
+                        <input type="number" class="form-control" placeholder="Documento ..." formControlName="txtDocument" #txtDocument (input)="searchPerson('id|'+txtDocument.value)" (paste)="pasteEvent($event,'id|')">
                         <div *ngIf="isLsClient && isTxtDocumentActive">
                             <ul>
                                 <li *ngFor="let client of lsClient$ | async" (click)="setDataClientToForm(client)">
@@ -31,7 +30,7 @@
                         <label for="#">{{lblNameDescription}}:</label>
                         <!--Para manejar formularios reactivos se debe registrar dentro de los input correspondientes-->
                         <input type="text" placeholder="{{lblNameDescription}} ..." class="form-control"
-                            formControlName="txtName" #txtName (input)="searchPerson('name|'+txtName.value)">
+                            formControlName="txtName" #txtName (input)="searchPerson('name|'+txtName.value)" (paste)="pasteEvent($event,'name|')">
                         <div *ngIf="isLsClient && isTxtNameActive">
                             <ul>
                                 <li *ngFor="let client of lsClient$ | async" (click)="setDataClientToForm(client)">
@@ -53,7 +52,7 @@
                         <input type="number" placeholder="Celular..." class="form-control"
                             formControlName="txtCellPhone" #txtCellphone
                             (input)="searchPerson('cellphone|'+txtCellphone.value)"                            
-                            (paste)="pasteEvent($event,'txtCellPhone')"
+                            (paste)="pasteEvent($event,'cellphone|')"
                             (keydown.enter)="setValueSetted($event)"
                             >
 
@@ -77,7 +76,7 @@
                         <label for="#">Correo electrónico</label>
                         <input type="email" placeholder="Email..." class="form-control" formControlName="txtEmail"
                             #txtEmail (input)="searchPerson('email|'+txtEmail.value)"
-                            (paste)="pasteEvent($event,'txtEmail')"
+                            (paste)="pasteEvent($event,'email|')"
                             >
                         <div *ngIf="isLsPreClient && isTxtEmailActive">
                             <ul>

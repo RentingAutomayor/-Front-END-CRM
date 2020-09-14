@@ -426,19 +426,13 @@ export class PersonComponent implements OnInit {
     console.log(pPreclient);
   }
 
-  pasteEvent(event: ClipboardEvent, control: string) {
+  pasteEvent(event: ClipboardEvent, identifierControl: string) {
 
-    // console.log("["+control+"] : " + event.clipboardData.getData('text'));
+    console.error("["+identifierControl+"] : " + event.clipboardData.getData('text'));
 
-    // let valuePasted =  event.clipboardData.getData('text');
-    // switch(control){
-    //   case 'txtEmail':
-    //       this.formPerson.controls.txtEmail.setValue(valuePasted);
-    //     break;
-    //   case 'txtCellPhone':
-    //       this.formPerson.controls.txtCellPhone.setValue(valuePasted);
-    //     break;
-    // }
+    let valuePasted =  event.clipboardData.getData('text');    
+    identifierControl = identifierControl + valuePasted;
+    this.searchPerson(identifierControl);
   }
 
   setValueSetted(event) {

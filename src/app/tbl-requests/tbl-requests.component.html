@@ -1,6 +1,6 @@
 <app-navigation></app-navigation>
 <div class="request-container w-75">
-    
+
     <h3>Solicitudes radicadas</h3>
     <div class="container-filter">
         <form [formGroup]="frmFilter">
@@ -8,7 +8,8 @@
                 <h6>Búsqueda de solicitudes</h6>
                 <div class="form-row mb-4">
                     <div class="col-4">
-                        <select class="browser-default custom-select" formControlName="cmbKindOfFilter" (change)="setKindOfFilter()">
+                        <select class="browser-default custom-select" formControlName="cmbKindOfFilter"
+                            (change)="setKindOfFilter()">
                             <option disabled>Seleccione ... </option>
                             <option [value]="'id'">Código</option>
                             <option [value]="'client'">Cliente</option>
@@ -21,39 +22,55 @@
                     </div>
                     <div class="col-4">
                         <input type="text" class="form-control" formControlName="txtValue"
-                            placeholder="valor a buscar ..." (input)="verifyContent()" *ngIf="filterIdIsVisible || filterClientIsVisible">
+                            placeholder="valor a buscar ..." (input)="verifyContent()"
+                            *ngIf="filterIdIsVisible || filterClientIsVisible">
 
-                            <select class="browser-default custom-select" formControlName="cmbProbability" *ngIf="filterProbabilityIsVisible">
-                                <option>Seleccione... </option>
-                                <option *ngFor="let probability of oLsProbabilities" [value]="probability.id">{{probability.description |titlecase}}</option>
-                            </select>
+                        <select class="browser-default custom-select" formControlName="cmbProbability"
+                            *ngIf="filterProbabilityIsVisible">
+                            <option>Seleccione... </option>
+                            <option *ngFor="let probability of oLsProbabilities" [value]="probability.id">
+                                {{probability.description |titlecase}}</option>
+                        </select>
 
-                            <select class="browser-default custom-select" formControlName="cmbUser" *ngIf="filterUserIsVisible">
-                                <option>Seleccione ... </option>
-                                <option *ngFor="let oUser of oLsUsers" [value]="oUser.id">{{ oUser.name+ " " + oUser.lastName | titlecase}}</option>
-                            </select>
+                        <select class="browser-default custom-select" formControlName="cmbUser"
+                            *ngIf="filterUserIsVisible">
+                            <option>Seleccione ... </option>
+                            <option *ngFor="let oUser of oLsUsers" [value]="oUser.id">
+                                {{ oUser.name+ " " + oUser.lastName | titlecase}}</option>
+                        </select>
 
-                            <select class="browser-default custom-select" formControlName="cmbParentState" *ngIf="filterParentStateIsVisbible">
-                                <option>Seleccione ... </option>
-                                <option *ngFor="let parentState of oLsParentStates" [value]="parentState.id">{{parentState.description | titlecase}}</option>
-                            </select>
+                        <select class="browser-default custom-select" formControlName="cmbParentState"
+                            *ngIf="filterParentStateIsVisbible">
+                            <option>Seleccione ... </option>
+                            <option *ngFor="let parentState of oLsParentStates" [value]="parentState.id">
+                                {{parentState.description | titlecase}}</option>
+                        </select>
 
-                            <select class="browser-default custom-select" formControlName="cmbChildState" *ngIf="filterChildStateIsVisible">
-                                <option>Seleccione ... </option>
-                                <option *ngFor="let childState of oLsChildState" [value]="childState.id">{{ childState.description | titlecase }}</option>
-                            </select>
+                        <select class="browser-default custom-select" formControlName="cmbChildState"
+                            *ngIf="filterChildStateIsVisible">
+                            <option>Seleccione ... </option>
+                            <option *ngFor="let childState of oLsChildState" [value]="childState.id">
+                                {{ childState.description | titlecase }}</option>
+                        </select>
 
-                            <input type="date" formControlName="txtRegistrationDate" class="form-control" *ngIf="filterRegistrationDateIsVisible">
+                        <input type="date" formControlName="txtRegistrationDate" class="form-control"
+                            *ngIf="filterRegistrationDateIsVisible">
                     </div>
                     <div class="col-4">
                         <button class="btn btn-outline-primary btn-md waves-effect btn-filter"
                             (click)="filterRequests()">Filtrar solicitudes</button>
 
-                            <button class="btn btn-outline-danger btn-md waves-effect btn-filter"
-                            (click)="deleteFilter()" *ngIf="isFiltred">Quitar filtros</button>
+                        <button class="btn btn-outline-danger btn-md waves-effect btn-filter" (click)="deleteFilter()"
+                            *ngIf="isFiltred">Quitar filtros</button>
 
-                            <button class="btn btn-outline-info btn-md waves-effect btn-filter"
-                            (click)="generateFile()" *ngIf="exportFileIsAllowed">Exportar Archivo</button>
+                        <button class="btn btn-outline-info btn-md waves-effect btn-filter" (click)="generateFile()"
+                            *ngIf="exportFileIsAllowed">Exportar Archivo</button>
+                    </div>
+                </div>
+                <div class="form-row mb-4" id="container-progress-bar">
+                    <label for="">Descargando archivo ...</label>
+                    <div class="progress">
+                        <div class="progress-bar" role="progressbar" style="width: 0%" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
                     </div>
                 </div>
             </fieldset>
@@ -93,12 +110,12 @@
                     </td>
                 </tr>
             </tbody>
-           <div class="paginationContainer">
-            <pagination-controls (pageChange)="p = $event"></pagination-controls>
-           </div>
-            
-              
-            
+            <div class="paginationContainer">
+                <pagination-controls (pageChange)="p = $event"></pagination-controls>
+            </div>
+
+
+
         </table>
     </div>
 </div>
@@ -155,4 +172,3 @@
         <app-img-loading></app-img-loading>
     </div>
 </div>
-
