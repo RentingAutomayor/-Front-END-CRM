@@ -281,12 +281,18 @@ export class TblRequestsComponent implements OnInit {
     containerProgressBar.setAttribute("style","opacity:1");
     var progressbar = document.getElementsByClassName("progress-bar");
     progressbar[0].setAttribute("style","width:25%");    
-    let lsDataToExport = await this.requestService.GetDataToExportFile();
+    let lsDataToExport = await this.requestService.GetDataToExportFile();   
     progressbar[0].setAttribute("style","width:50%");
+    
     let data = DataStructureRequest.MapDataToExport(lsDataToExport);
     let contentCSV = SharedFunctions.prepareDataToCSV(data);
     progressbar[0].setAttribute("style","width:75%");
-    SharedFunctions.downloadCSVFile(contentCSV,'Archivo_AV_Villas');
+
+    let dateToday = new Date(Date.now());
+    let year = dateToday.getUTCFullYear();
+    let month = dateToday.getUTCMonth() + 1;   
+    let fileName = `Archivo_AV_Villas_${year}_${month}`
+    SharedFunctions.downloadCSVFile(contentCSV,fileName);
     progressbar[0].setAttribute("style","width:100%");
     setTimeout(function(){
       var cont = document.getElementById("container-progress-bar");

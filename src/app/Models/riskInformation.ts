@@ -7,6 +7,7 @@ export class RiskInformation{
     dateResponseAnalysis:Date;
     datefiling:Date;
     ammountApproved:number;
+    dateApproved:Date;
     riskState:State;
     state:boolean;
     user:User;

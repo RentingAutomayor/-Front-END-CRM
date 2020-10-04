@@ -37,10 +37,16 @@
                   
                 </div>
                 <div class="form-row mb-4" *ngIf="isApproved">
-                    <div class="col-12">
+                    
+                    <div class="col-6">
                         <label for="#">Monto Aprobado</label>
                         <input type="text" class="form-control" placeholder="Valor" (keyup)="formatAmmountApproved($event)" formControlName="txtAmmountApproved">
                     </div>
+                    <div class="col-6">
+                        <label for="#">Fecha de Aprobación</label>
+                        <input type="date" class="form-control" placeholder="Fecha de aprobación"  formControlName="txtDateApproved">
+                    </div>
+
                 </div>
                 <div class="container-btnActions">
                     <input type="button" class="btn btn-danger btn-action" value="Cancelar"

@@ -72,14 +72,26 @@
             <legend>Información de riesgos</legend>
             <div class="form-row mb-4">
                 <div class="col-6">
+                    <label for="#">Fecha de radicación:</label>
+                    <input class="form form-control" type="text" disabled [value]="DateFiling">
+                </div>
+                <div class="col-6">
                     <label for="#">Estado de riesgos:</label>
                     <input class="form form-control" type="text" disabled [value]="RiskState">
+                </div>                
+                
+            </div>  
+            <div class="form-row mb-4">             
+                <div class="col-6">
+                    <label for="#">Fecha de aprobación:</label>
+                    <input class="form form-control" type="text" disabled [value]="DateApproved">
                 </div>
                 <div class="col-6">
                     <label for="#">Monto aprobado:</label>
                     <input class="form form-control" type="text" disabled [value]="ApprovedAmmount">
                 </div>
-            </div>  
+               
+            </div> 
             <br>
             <hr>
             <br>

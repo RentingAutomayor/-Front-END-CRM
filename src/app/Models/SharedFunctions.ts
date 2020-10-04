@@ -86,11 +86,11 @@ export class SharedFunctions {
                 return `"${valueFormatted}"`;
             });
 
-            console.log(values.join(';'));
+            //console.log(values.join(';'));
             csvRows.push(values.join(';'));
         }
        
-        console.log(csvRows);
+        //console.log(csvRows);
         return csvRows.join('\n');
     }
 
@@ -116,6 +116,11 @@ export class SharedFunctions {
         dataFormmated = dataFormmated.replace(/Ó/g,'O');
         dataFormmated = dataFormmated.replace(/Ú/g,'U');
         dataFormmated = dataFormmated.replace(/Ñ/g,'N');
+
+        if(dataFormmated == "NULL"){
+            dataFormmated = "";
+        }
+
         return dataFormmated;
     }
 }

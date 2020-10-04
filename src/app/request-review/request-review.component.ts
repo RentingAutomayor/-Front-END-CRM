@@ -13,7 +13,9 @@ import { NavigationService } from '../Services/navigation.service';
 export class RequestReviewComponent implements OnInit {
   request: RequestRenting;
   RiskState: String;
+  DateFiling:String;
   ApprovedAmmount: string;
+  DateApproved:string;
   LegalizationDate: string;
   DeliveredDate: string;
   sharedFunctions:SharedFunctions;
@@ -33,9 +35,13 @@ export class RequestReviewComponent implements OnInit {
       if (this.request.riskInformation == null) {
         this.RiskState = "Sin definir ...";
         this.ApprovedAmmount = "0";
+        this.DateApproved = "Sin fecha de aprobación ..."; 
+        this.DateFiling = "Sin fecha de radicación ..."       ;
       } else {
         this.RiskState = this.request.riskInformation.riskState.description;
-        this.ApprovedAmmount = this.sharedFunctions.formatNumber(this.request.riskInformation.ammountApproved.toString());
+        this.ApprovedAmmount = this.sharedFunctions.formatNumber(this.request.riskInformation.ammountApproved.toString());        
+        this.DateApproved = (this.request.riskInformation.dateApproved == null) ? "Sin fecha de aprobación" : this.request.riskInformation.dateApproved.toString().substr(0,10);
+        this.DateFiling = (this.request.riskInformation.datefiling == null) ? "Sin fecha de radicación" : this.request.riskInformation.datefiling.toString().substr(0,10);
       }
 
       if (this.request.operationalInformation == null) {

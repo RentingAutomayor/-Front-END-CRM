@@ -31,6 +31,7 @@ export class DataStructureRequest{
     public probabilidad:string;
     public decisionRiesgo:string;
     public fechaRadicacionRiesgo:Date;
+    public fechaAprobacion:Date;
     public montoAprobado:number;
     public vehiculosEntregados:number;
     public montoActivosEntregado:number;
@@ -64,32 +65,33 @@ export class DataStructureRequest{
             'Dane empresa':row.daneEmpresa,
             'Contacto empresa':row.contactoEmpresa,
             'Cargo':row.cargo,
-            'Teléfono':row.telefono,
+            'Telefono':row.telefono,
             'Celular':row.celular,
-            'Dirección':row.direccion,
+            'Direccion':row.direccion,
             'Correo':row.correo,
             'Actividad económica':row.actividadEconomica,
-            'Código act económica':row.codigoActividadEconomica,
+            'Codigo act económica':row.codigoActividadEconomica,
             'Observaciones':row.observaciones,
-            'Fecha visita':row.fechaVisita,
-            'Fecha última visita':row.fechaUltimaVisita,
+            'Fecha visita': row.fechaVisita  ,
+            'Fecha ultima visita':row.fechaUltimaVisita,
             'Estado principal':row.estadoPrincipal,
             'Estado secundario':row.estadoSecundario,
             'Tercer estado':row.tercerEstado,
             'Probabilidad':row.probabilidad,
-            'Decisión de riesgo':row.decisionRiesgo,
-            'Fecha radicación riesgo':row.fechaRadicacionRiesgo,
+            'Decision de riesgo':row.decisionRiesgo,
+            'Fecha radicacion riesgo':row.fechaRadicacionRiesgo,
+            'Fecha de aprobacion': row.fechaAprobacion,
             'Monto aprobado':row.montoAprobado,
-            '# Vehículos entregados':row.vehiculosEntregados,
+            '# Vehiculos entregados':row.vehiculosEntregados,
             'Monto activos entregado':row.montoActivosEntregado,
-            'Fecha legalización':row.fechaLegalizacion,
+            'Fecha legalizacion':row.fechaLegalizacion,
             'Fecha entrega':row.fechaEntrega,
-            'Usuario creción registro':row.usuarioCreacionRegistro,
-            'Fecha creación':row.fechaCreacion,
-            'Usuario actualización registro': row.usuarioActualizacionRiesgo,
-            'Fecha actualización':row.fechaActualizacion,
-            'Usuario actualización riesgoOp': row.usuarioActualizacionRiesgoOP,
-            'Fecha actualización riesgoOp': row.fechaActualizacionRiesgoOp
+            'Usuario creacion registro':row.usuarioCreacionRegistro,
+            'Fecha creacion':row.fechaCreacion,
+            'Usuario actualizacion registro': row.usuarioActualizacionRiesgo,
+            'Fecha actualizacion':row.fechaActualizacion,
+            'Usuario actualizacion riesgoOp': row.usuarioActualizacionRiesgoOP,
+            'Fecha actualizacion riesgoOp': row.fechaActualizacion
         }));
         console.log("[Data Mapeada] : ");
         console.log(dataMap);

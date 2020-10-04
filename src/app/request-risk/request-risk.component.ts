@@ -37,6 +37,7 @@ export class RequestRiskComponent implements OnInit {
     this.frmRiskInformation = new FormGroup({
       cmbRiskState: new FormControl('Seleccione ...'),
       txtAmmountApproved: new FormControl(''),
+      txtDateApproved: new FormControl(''),
       txtFilingDate: new FormControl('')
     });
   }
@@ -58,6 +59,9 @@ console.log(this.requestToUpdate.riskInformation.datefiling);
         if (this.requestToUpdate.riskInformation.riskState.description.toUpperCase() == "APROBADO") {
           this.isApproved = true;
           this.frmRiskInformation.controls.txtAmmountApproved.setValue(this.sharedFunction.formatNumber(this.requestToUpdate.riskInformation.ammountApproved.toString()));
+          if(this.requestToUpdate.riskInformation.dateApproved != null){
+            this.frmRiskInformation.controls.txtDateApproved.setValue(this.requestToUpdate.riskInformation.dateApproved.toString().substr(0,10));
+          }
           this.numInputByUser = this.requestToUpdate.riskInformation.ammountApproved.toString();
           this.frmRiskInformation.controls.filingDate
         } else {
@@ -117,12 +121,14 @@ console.log(this.requestToUpdate.riskInformation.datefiling);
     let rskState = new RiskInformation();
     let oRskState = this.lsRiskStates.find(st => st.id == riskState);
     let ammountApproved = this.frmRiskInformation.controls.txtAmmountApproved.value.replace(/\./g,'');
+    let dateApprobed = this.frmRiskInformation.controls.txtDateApproved.value;
     let filingDate = this.frmRiskInformation.controls.txtFilingDate.value;
     
 
     rskState.riskState = oRskState;
     rskState.ammountApproved = ammountApproved;
     rskState.datefiling = filingDate;
+    rskState.dateApproved = dateApprobed;
     console.log("[Fecha de radicación]"+filingDate);
     rskState.user = JSON.parse(localStorage.getItem("CurrentUser"));
  
