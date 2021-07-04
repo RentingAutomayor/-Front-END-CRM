@@ -1,4 +1,4 @@
-import { Component, OnInit , OnChanges,SimpleChange, Input} from '@angular/core';
+import { Component, OnInit , OnChanges,SimpleChange, Input, Output, EventEmitter} from '@angular/core';
 import { CanalService } from '../Services/canal.service';
 import { Canal } from '../Models/canal';
 import { FormControl,FormsModule } from '@angular/forms';
@@ -13,10 +13,10 @@ export class CanalComponent implements OnInit {
   cmbCanal = new FormControl('Seleccione');
   @Input() canalSelected:Canal;
   @Input() CanalGroup:number;
+  @Output() CanalWasSelected = new EventEmitter<boolean>();
 
   constructor(private canalSercice: CanalService) {
-    this.cmbCanal.setValue(0);  
-    
+    this.cmbCanal.setValue(0);      
    }
 
   ngOnInit() {   
@@ -37,7 +37,8 @@ export class CanalComponent implements OnInit {
     }else if(this.CanalGroup == 2){ // canal de prospecto clientes
       this.canalSercice.setSelectedCanal(canalSelected);
     }
-   
+  
+    this.CanalWasSelected.emit(true);
   }
 
   ngOnChanges(changes: { [propKey: string]: SimpleChange }) {

@@ -28,6 +28,7 @@ export class RequestComponent implements OnInit {
   lsParentState: State[];
   lsSecondState: State[];
   lsAccountManagerBank:Contact[];
+  lsAccountManagerBankTmp:Contact[];
   frmRequest: FormGroup;
   oSelectedProbability: Probability;
   oSelectedParentState: State;
@@ -45,6 +46,8 @@ export class RequestComponent implements OnInit {
   @Input() oCanalSelected:Canal;
   canalGroup_id:number;
   canalClientProspect = 2;
+  CANAL_AV_VILLAS = 1;
+  isAccountManagerVisible:boolean;
 
 
 
@@ -67,6 +70,8 @@ export class RequestComponent implements OnInit {
       btnSaveRequest: new FormControl('Guardar solicitud'),
       txtObservation: new FormControl('')
     });
+
+    this.isAccountManagerVisible = false;
   }
 
   async ngOnInit() {
@@ -74,7 +79,8 @@ export class RequestComponent implements OnInit {
     this.canalGroup_id = this.canalClientProspect;
     this.lsProbabilities = await this.requestService.getProbabilities();
     this.lsParentState = await this.requestService.getParentStates("COMERCIAL");
-    this.lsAccountManagerBank = await this.allyService.getAccountmanagers();
+    this.lsAccountManagerBankTmp = await this.allyService.getAccountmanagers();
+    this.lsAccountManagerBank = this.lsAccountManagerBankTmp.filter( acm => acm.state);
     this.isAwaiting = false;
     this.oUserAuth = this.userService.getUserAuth();
     this.isANewRequest = true;
@@ -94,8 +100,20 @@ export class RequestComponent implements OnInit {
     this.requestService.setRequestToEdit(null);
   }
 
+  setCanal(){
+    let canalSelected = this.canalService.getSelectedCanal();
+    if(canalSelected.id == this.CANAL_AV_VILLAS){
+      this.isAccountManagerVisible = true;
+    }  else{
+      this.isAccountManagerVisible = false;
+    }  
+  }
+
   setRequestToUpdate(pRequest:RequestRenting){
     //TODO: validate that changes
+    if(!pRequest.contact.state){
+      this.lsAccountManagerBank.push(pRequest.contact);
+    }
     this.frmRequest.controls.cmbAccounManager.setValue(pRequest.contact.id);
     
     if(pRequest.initialDate != null){
@@ -117,6 +135,7 @@ export class RequestComponent implements OnInit {
 
     this.oCanalSelected = pRequest.canal;
     this.canalService.setSelectedCanal(this.oCanalSelected);
+    this.setCanal();
     this.frmRequest.controls.txtObservation.setValue(pRequest.observation);
 
   }
@@ -141,6 +160,9 @@ export class RequestComponent implements OnInit {
 
   setAccountManager(idAccountManager: number){
     this.oSelectedAccountManager = this.lsAccountManagerBank.find(acm => acm.id == idAccountManager);
+    if(!this.oSelectedAccountManager.state){
+      this.oSelectedAccountManager.state = true;
+    }
   }
 
   async saveRequest() {
@@ -161,6 +183,8 @@ export class RequestComponent implements OnInit {
     this.oRequestRenting.contact = this.oSelectedAccountManager;
 
     let oCanalSelected = this.canalService.getSelectedCanal();
+
+
     this.oRequestRenting.canal = oCanalSelected;
     this.oRequestRenting.observation = this.frmRequest.controls.txtObservation.value;
 

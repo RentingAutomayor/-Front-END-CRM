@@ -13,6 +13,8 @@ import { RequestService } from '../Services/request.service';
 import { State } from '../Models/state';
 import { FormGroup, FormControl } from '@angular/forms';
 import { NavigationService } from '../Services/navigation.service';
+import { DataStructurePrRequest } from '../Models/DataStructurePreRequest';
+import { SharedFunctions } from '../Models/SharedFunctions';
 
 @Component({
   selector: 'app-tbl-pre-clients',
@@ -22,6 +24,7 @@ import { NavigationService } from '../Services/navigation.service';
 export class TblPreClientsComponent implements OnInit {
   private lsPreRequest: PreRequest[];
   private lsPreRequestTMP:PreRequest[];
+  private lsDataToExport:DataStructurePrRequest[];
   //pagination
   p: number = 1;
   private isAwaiting: boolean;
@@ -234,5 +237,33 @@ export class TblPreClientsComponent implements OnInit {
     this.preRequestService.SetPreRequestToReview(PreRequestDB);
     this.navigationService.SetNavigationElement('nav-pre-clients');
     this.router.navigate(['/PreRequestReview']);
+  }
+
+  async GenerateFile(){
+    var containerProgressBar = document.getElementById("container-progress-bar");
+    containerProgressBar.setAttribute("style","opacity:1");
+    var progressbar = document.getElementsByClassName("progress-bar");
+    progressbar[0].setAttribute("style","width:25%");    
+
+    this.lsDataToExport = await this.preRequestService.GetDataToExportFile();
+    console.warn("Data to export: ", this.lsDataToExport);
+    progressbar[0].setAttribute("style","width:50%"); 
+    
+    let data = DataStructurePrRequest.MapDataToExport(this.lsDataToExport);
+    let contentCSV = SharedFunctions.prepareDataToCSV(data);
+    progressbar[0].setAttribute("style","width:75%");
+
+    let dateToday = new Date(Date.now());
+    let year = dateToday.getUTCFullYear();
+    let month = dateToday.getUTCMonth() + 1;   
+    let fileName = `Archivo_solicitudes_persona_natural_${year}_${month}`
+    SharedFunctions.downloadCSVFile(contentCSV,fileName);
+    progressbar[0].setAttribute("style","width:100%");
+    setTimeout(function(){
+      var cont = document.getElementById("container-progress-bar");
+      cont.setAttribute("style","opacity:0");
+      cont.setAttribute("style","width:0%");
+    },2000);   
+
   }
 }

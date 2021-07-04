@@ -8,11 +8,11 @@
                 <div class="card-body">
                     <div class="form-row mb-4">
                         <div class="col-12">                            
-                            <app-canal [canalSelected]="oCanalSelected" [CanalGroup]="canalGroup_id"></app-canal>                          
+                            <app-canal [canalSelected]="oCanalSelected" [CanalGroup]="canalGroup_id" (CanalWasSelected)="setCanal()"></app-canal>                          
                         </div>
                     </div> 
 
-                    <div class="form-row mb-4">
+                    <div class="form-row mb-4" *ngIf="isAccountManagerVisible">
                         <div class="col-12">
                             <Label>Gerente del banco</Label>
                             <select class="form-control" formControlName="cmbAccounManager" (change)="setAccountManager($event.target.value)">

@@ -14,4 +14,5 @@ export class Contact{
     adress:string;
     email:string;
     branch:Branch;
+    state:boolean;
 }

@@ -1,7 +1,6 @@
 import { Client } from "./client";
 import { User } from "./user";
 import { State } from "./state";
-import { BrowserDynamicTestingModule } from "@angular/platform-browser-dynamic/testing";
 import { Probability } from "./probability";
 import { Contact } from "./contact";
 import { RiskInformation } from "./riskInformation";

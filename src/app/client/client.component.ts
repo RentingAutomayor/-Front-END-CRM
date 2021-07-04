@@ -6,7 +6,6 @@ import { ClientService } from '../Services/client.service';
 import { EconomicActivity } from '../Models/EconomicActivity';
 import { EconomicActivityService } from '../Services/economic-activity.service';
 import { Contact } from '../Models/contact';
-import { concat } from 'rxjs';
 import { Canal } from '../Models/canal';
 import { CanalService } from '../Services/canal.service';
 import { FormControl } from '@angular/forms';
@@ -81,7 +80,7 @@ export class ClientComponent implements OnInit {
       this.clientService.setClientTmp(this.oClientToUpdate);
       this.bClientWillBeUpdate = true;
       this.clientService.setContacts(this.oClientToUpdate.lsContacts);
-    }else{
+    }else {
       this.bClientWillBeUpdate = false;
     }
     

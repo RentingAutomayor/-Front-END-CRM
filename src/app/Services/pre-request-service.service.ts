@@ -3,6 +3,7 @@ import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { PreClient } from '../Models/PreClient';
 import { ResponseApi } from '../Models/responseApi';
 import { PreRequest } from '../Models/PreRequest';
+import { DataStructurePrRequest } from '../Models/DataStructurePreRequest';
 
 
 
@@ -71,6 +72,11 @@ export class PreRequestServiceService {
     let httpParams = new HttpParams().set('idPreRequest',idPreRequest);
     let options= {params: httpParams};
     return this.http.delete<ResponseApi>(urlDelete,options).toPromise();
+  }
+
+  async GetDataToExportFile():Promise<DataStructurePrRequest[]>{
+    let urlGetDataFile = this.url + '/GetDataToExport';    
+    return this.http.get<DataStructurePrRequest[]>(urlGetDataFile).toPromise();
   }
 
   

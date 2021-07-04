@@ -3,7 +3,7 @@ import { Form, FormControl, FormGroup } from '@angular/forms';
 import { PreRequest } from '../Models/PreRequest';
 import { PreRequestServiceService } from '../Services/pre-request-service.service';
 import { DatePipe } from '@angular/common';
-import { Person } from '../Models/Person';
+import { Person } from '../Models/person';
 
 import { PersonService } from '../Services/person.service';
 import { Canal } from '../Models/canal';

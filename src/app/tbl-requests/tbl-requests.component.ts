@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { RequestRenting } from '../Models/requestRenting';
+import { RequestRenting } from '../Models/RequestRenting';
 import { RequestService } from '../Services/request.service';
 import { User } from '../Models/user';
 import { UserService } from '../Services/user.service';
